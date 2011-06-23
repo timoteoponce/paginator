@@ -13,7 +13,7 @@ import java.util.Collection;
  */
 public class List<T> extends ArrayList<T> {
 
-    private Long totalSize;
+    private long totalSize;
 
     public List() {
     }
@@ -23,11 +23,11 @@ public class List<T> extends ArrayList<T> {
         this.totalSize = totalSize;
     }
 
-    public Long getTotalSize() {
+    public long getTotalSize() {
         return totalSize;
     }
 
-    public void setTotalSize(Long totalSize) {
+    public void setTotalSize(long totalSize) {
         this.totalSize = totalSize;
     }
 }

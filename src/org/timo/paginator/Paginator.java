@@ -14,7 +14,7 @@ public class Paginator<T> {
         throw new UnsupportedOperationException();
     }
 
-    public Parameters getParameters(){
+    public PaginationData getParameters(){
         throw new UnsupportedOperationException();
     }
 
