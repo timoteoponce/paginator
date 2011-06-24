@@ -15,6 +15,10 @@ public class PaginationData implements RangeProvider {
     private int totalSize;
 
     public int getCurrentPage() {
+        int lastPage = getLastPage();
+        if (currentPage > lastPage) {            
+            this.currentPage = lastPage;            
+        }
         return currentPage;
     }
 
@@ -51,12 +55,11 @@ public class PaginationData implements RangeProvider {
 
     public int getFromIndex() {
         int firstResult = 0;
-        if (!isEmpty() && getCurrentPage() > 1) {
+        if (!isEmpty() && currentPage > 1) {
             firstResult = (currentPage - 1) * pageSize;
 
             if ((firstResult + 1) > totalSize) {
-                firstResult = totalSize - pageSize;
-                setCurrentPage(firstResult / pageSize + 1);
+                firstResult = totalSize - (pageSize - pageSize % totalSize);
             }
         }
         return firstResult;
@@ -85,7 +88,10 @@ public class PaginationData implements RangeProvider {
     public int getLastPage() {
         int lastPage = getFirstPage();
         if (!isEmpty()) {
-            lastPage = (totalSize / pageSize) + (totalSize % pageSize);
+            lastPage = (totalSize / pageSize);
+            if ((totalSize % pageSize) > 0) {
+                lastPage++;
+            }
         }
         return lastPage;
 

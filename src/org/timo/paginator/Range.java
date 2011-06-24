@@ -25,4 +25,9 @@ public class Range {
     public int getToIndex() {
         return toIndex;
     }
+
+    @Override
+    public String toString() {
+        return "Range{" + "fromIndex=" + fromIndex + ",toIndex=" + toIndex + '}';
+    }
 }

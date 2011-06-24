@@ -183,4 +183,15 @@ public class PaginationDataTest {
         Assert.assertEquals(15, paginationData.getFromIndex());
         Assert.assertEquals(20, paginationData.getToIndex());
     }
+
+     @Test
+    public void testDynamicPageSizeChange() {
+        PaginationData paginationData = new PaginationData();
+        paginationData.setTotalSize(7);
+        paginationData.setPageSize(5);
+        paginationData.setCurrentPage(2);
+        
+        paginationData.setPageSize(10);
+        Assert.assertEquals(1, paginationData.getCurrentPage());
+    }
 }

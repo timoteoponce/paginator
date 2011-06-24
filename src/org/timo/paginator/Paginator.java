@@ -81,7 +81,7 @@ public class Paginator<T> {
         this.paginationData.clear();
     }
 
-    private void init() {
+    public void init() {
         if (isDirty()) {
             refresh();
         }
