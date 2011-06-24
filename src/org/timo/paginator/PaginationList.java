@@ -11,23 +11,23 @@ import java.util.Collection;
  *
  * @author timoteo
  */
-public class List<T> extends ArrayList<T> {
+public class PaginationList<T> extends ArrayList<T> {
 
-    private long totalSize;
+    private int totalSize;
 
-    public List() {
+    public PaginationList() {
     }
 
-    public List(final Collection<T> collection, final Long totalSize) {
+    public PaginationList(final Collection<T> collection, final int totalSize) {
         super(collection);
         this.totalSize = totalSize;
     }
 
-    public long getTotalSize() {
+    public int getTotalSize() {
         return totalSize;
     }
 
-    public void setTotalSize(long totalSize) {
+    public void setTotalSize(int totalSize) {
         this.totalSize = totalSize;
     }
 }

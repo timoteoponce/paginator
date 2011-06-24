@@ -96,11 +96,9 @@ public class PaginationData {
         return totalSize < 1;
     }
 
-    public static void main(String[] args) {
-        int pageSize = 1;
-        int totalSize = 0;
-        System.out.println("" + (((totalSize / pageSize) + (totalSize % pageSize))));
-        System.out.println("" + ((int) Math.pow(4, 0)));
-
+    public void clear() {
+        currentPage = 1;
+        pageSize = 1;
+        totalSize = 0;
     }
 }

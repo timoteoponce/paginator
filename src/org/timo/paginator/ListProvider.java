@@ -10,5 +10,5 @@ package org.timo.paginator;
  * @author timoteo
  */
 public interface ListProvider<T> {
-    List<T> provideList(PaginationData parameters);
+    PaginationList<T> provideList(PaginationData parameters);
 }
