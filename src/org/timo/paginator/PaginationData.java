@@ -8,7 +8,7 @@ package org.timo.paginator;
  *
  * @author timoteo
  */
-public class PaginationData {
+public class PaginationData implements RangeProvider {
 
     private int currentPage = 1;
     private int pageSize = 1;
@@ -21,8 +21,6 @@ public class PaginationData {
     public void setCurrentPage(int currentPage) {
         if (currentPage > 0 && currentPage <= getLastPage()) {
             this.currentPage = currentPage;
-        } else {
-            this.currentPage = getFirstPage();
         }
     }
 
@@ -46,12 +44,30 @@ public class PaginationData {
         }
     }
 
-    public int getLowerIndex() {
+    public Range getRange(int totalSize) {
+        setTotalSize(totalSize);
+        return new Range(getFromIndex(), getToIndex());
+    }
+
+    public int getFromIndex() {
         int firstResult = 0;
         if (!isEmpty() && getCurrentPage() > 1) {
             firstResult = (currentPage - 1) * pageSize;
+
+            if ((firstResult + 1) > totalSize) {
+                firstResult = totalSize - pageSize;
+                setCurrentPage(firstResult / pageSize + 1);
+            }
         }
         return firstResult;
+    }
+
+    public int getToIndex() {
+        int toIndex = getFromIndex() + pageSize;
+        if (toIndex > totalSize) {
+            toIndex = totalSize;
+        }
+        return toIndex;
     }
 
     public int getFirstPage() {
@@ -59,19 +75,11 @@ public class PaginationData {
     }
 
     public int getNextPage() {
-        int nextPage = currentPage + 1;
-        if (!hasNextPage()) {
-            nextPage = -1;
-        }
-        return nextPage;
+        return currentPage + 1;
     }
 
     public int getPreviousPage() {
-        int previousPage = currentPage - 1;
-        if (!hasPreviousPage()) {
-            previousPage = -1;
-        }
-        return previousPage;
+        return currentPage - 1;
     }
 
     public int getLastPage() {
@@ -84,8 +92,7 @@ public class PaginationData {
     }
 
     public boolean hasNextPage() {
-        int lastPage = getLastPage();
-        return !isEmpty() && currentPage < lastPage;
+        return !isEmpty() && currentPage < getLastPage();
     }
 
     public boolean hasPreviousPage() {

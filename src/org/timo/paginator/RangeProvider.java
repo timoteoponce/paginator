@@ -8,7 +8,7 @@ package org.timo.paginator;
  *
  * @author timoteo
  */
-public interface ListProvider<T> {
+public interface RangeProvider {
 
-    PaginationList<T> provideList(RangeProvider rangeProvider);
+    Range getRange(int totalSize);
 }

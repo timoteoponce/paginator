@@ -21,8 +21,8 @@ public class PaginationDataTest {
         //
         Assert.assertEquals(1, paginationData.getCurrentPage());
         Assert.assertEquals(1, paginationData.getFirstPage());
-        Assert.assertEquals(-1, paginationData.getPreviousPage());
-        Assert.assertEquals(-1, paginationData.getNextPage());
+        Assert.assertEquals(0, paginationData.getPreviousPage());
+        Assert.assertEquals(2, paginationData.getNextPage());
         Assert.assertEquals(1, paginationData.getLastPage());
     }
 
@@ -73,7 +73,7 @@ public class PaginationDataTest {
         //
         Assert.assertEquals(1, paginationData.getCurrentPage());
         Assert.assertEquals(1, paginationData.getFirstPage());
-        Assert.assertEquals(-1, paginationData.getPreviousPage());
+        Assert.assertEquals(0, paginationData.getPreviousPage());
         Assert.assertEquals(2, paginationData.getNextPage());
         Assert.assertEquals(3, paginationData.getLastPage());
     }
@@ -87,7 +87,7 @@ public class PaginationDataTest {
         //
         Assert.assertEquals(1, paginationData.getCurrentPage());
         Assert.assertEquals(1, paginationData.getFirstPage());
-        Assert.assertEquals(-1, paginationData.getPreviousPage());
+        Assert.assertEquals(0, paginationData.getPreviousPage());
         Assert.assertEquals(2, paginationData.getNextPage());
         Assert.assertEquals(3, paginationData.getLastPage());
     }
@@ -138,16 +138,23 @@ public class PaginationDataTest {
         6 7 - page 4
          */
         paginationData.setCurrentPage(1);
-        Assert.assertEquals(0, paginationData.getLowerIndex());
+        Assert.assertEquals(0, paginationData.getFromIndex());
+        Assert.assertEquals(2, paginationData.getToIndex());
+
         paginationData.setCurrentPage(2);
-        Assert.assertEquals(2, paginationData.getLowerIndex());
+        Assert.assertEquals(2, paginationData.getFromIndex());
+        Assert.assertEquals(4, paginationData.getToIndex());
+
         paginationData.setCurrentPage(3);
-        Assert.assertEquals(4, paginationData.getLowerIndex());
-         paginationData.setCurrentPage(4);
-        Assert.assertEquals(6, paginationData.getLowerIndex());
+        Assert.assertEquals(4, paginationData.getFromIndex());
+        Assert.assertEquals(6, paginationData.getToIndex());
+
+        paginationData.setCurrentPage(4);
+        Assert.assertEquals(6, paginationData.getFromIndex());
+        Assert.assertEquals(7, paginationData.getToIndex());
     }
 
-     @Test
+    @Test
     public void testEvenLowerIndex() {
         PaginationData paginationData = new PaginationData();
         paginationData.setTotalSize(28);
@@ -161,12 +168,19 @@ public class PaginationDataTest {
         5 6
         6 7*/
         paginationData.setCurrentPage(1);
-        Assert.assertEquals(0, paginationData.getLowerIndex());
+        Assert.assertEquals(0, paginationData.getFromIndex());
+        Assert.assertEquals(5, paginationData.getToIndex());
+
         paginationData.setCurrentPage(2);
-        Assert.assertEquals(5, paginationData.getLowerIndex());
+        Assert.assertEquals(5, paginationData.getFromIndex());
+        Assert.assertEquals(10, paginationData.getToIndex());
+
         paginationData.setCurrentPage(3);
-        Assert.assertEquals(10, paginationData.getLowerIndex());
-         paginationData.setCurrentPage(4);
-        Assert.assertEquals(15, paginationData.getLowerIndex());
+        Assert.assertEquals(10, paginationData.getFromIndex());
+        Assert.assertEquals(15, paginationData.getToIndex());
+
+        paginationData.setCurrentPage(4);
+        Assert.assertEquals(15, paginationData.getFromIndex());
+        Assert.assertEquals(20, paginationData.getToIndex());
     }
 }

@@ -24,9 +24,7 @@ public class Paginator<T> {
     }
 
     public List<T> getList() {
-        if (isDirty()) {
-            refresh();
-        }
+        init();
         return resultList;
     }
 
@@ -35,25 +33,26 @@ public class Paginator<T> {
     }
 
     public void goFirstPage() {
+        init();
         paginationData.setCurrentPage(paginationData.getFirstPage());
         markAsDirty();
     }
 
     public void goPreviousPage() {
-        if (paginationData.hasPreviousPage()) {
-            paginationData.setCurrentPage(paginationData.getPreviousPage());
-            markAsDirty();
-        }
+        init();
+        paginationData.setCurrentPage(paginationData.getPreviousPage());
+        markAsDirty();
     }
 
     public void goNextPage() {
-        if (paginationData.hasNextPage()) {
-            paginationData.setCurrentPage(paginationData.getNextPage());
-            markAsDirty();
-        }
+        init();
+        paginationData.setCurrentPage(paginationData.getNextPage());
+        markAsDirty();
+
     }
 
     public void goLastPage() {
+        init();
         paginationData.setCurrentPage(paginationData.getLastPage());
         markAsDirty();
     }
@@ -74,12 +73,18 @@ public class Paginator<T> {
         this.dirty = dirty;
     }
 
-    private void markAsDirty(){
+    private void markAsDirty() {
         this.dirty = true;
     }
 
-    public void clear(){
+    public void clear() {
         markAsDirty();
         this.paginationData.clear();
+    }
+
+    private void init() {
+        if (isDirty()) {
+            refresh();
+        }
     }
 }
