@@ -4,6 +4,8 @@
  */
 package org.timo.paginator;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,8 +20,8 @@ public class PaginatorTest {
         PaginationData paginationData = new PaginationData();
         Paginator<String> paginator = new Paginator<String>(paginationData, new ListProvider<String>() {
 
-            public PaginationList<String> provideList(RangeProvider rangeProvider) {
-                return new PaginationList<String>();
+            public List<String> provideList(RangeProvider rangeProvider) {
+                return new ArrayList<String>();
             }
         });
         Assert.assertNotNull(paginator.getList());
@@ -32,7 +34,7 @@ public class PaginatorTest {
 
     @Test
     public void testGoNext() {
-        final PaginationList list = createNumberList(25);
+        final List<String> list = createNumberList(25);
         PaginationData paginationData = new PaginationData();
         paginationData.setPageSize(5);
         Paginator<String> paginator = new Paginator<String>(paginationData, new SimpleListProvider<String>(list));
@@ -71,7 +73,7 @@ public class PaginatorTest {
 
     @Test
     public void testGoPrevious() {
-        final PaginationList list = createNumberList(15);
+        final List<String> list = createNumberList(15);
         PaginationData paginationData = new PaginationData();
         paginationData.setPageSize(5);
         Paginator<String> paginator = new Paginator<String>(paginationData, new SimpleListProvider<String>(list));
@@ -100,7 +102,7 @@ public class PaginatorTest {
 
     @Test
     public void testGoFirst() {
-        final PaginationList list = createNumberList(15);
+        final List<String> list = createNumberList(15);
         PaginationData paginationData = new PaginationData();
         paginationData.setPageSize(5);
         Paginator<String> paginator = new Paginator<String>(paginationData, new SimpleListProvider<String>(list));
@@ -122,7 +124,7 @@ public class PaginatorTest {
 
     @Test
     public void testGoLast() {
-        final PaginationList list = createNumberList(15);
+        final List<String> list = createNumberList(15);
         PaginationData paginationData = new PaginationData();
         paginationData.setPageSize(5);
         Paginator<String> paginator = new Paginator<String>(paginationData, new SimpleListProvider<String>(list));
@@ -135,7 +137,7 @@ public class PaginatorTest {
 
     @Test
     public void testRefresh() {
-        final PaginationList list = createNumberList(15);
+        final List<String> list = createNumberList(15);
         PaginationData paginationData = new PaginationData();
         paginationData.setPageSize(5);
         SimpleListProvider<String> listProvider = new SimpleListProvider<String>(list);
@@ -163,7 +165,7 @@ public class PaginatorTest {
 
     @Test
     public void testDynamicGoNext() {
-        final PaginationList list = createNumberList(15);
+        final List<String> list = createNumberList(15);
         PaginationData paginationData = new PaginationData();
         paginationData.setPageSize(5);
         SimpleListProvider<String> listProvider = new SimpleListProvider<String>(list);
@@ -187,7 +189,7 @@ public class PaginatorTest {
 
     @Test
     public void testDynamicGoPrevious() {
-        final PaginationList list = createNumberList(15);
+        final List<String> list = createNumberList(15);
         PaginationData paginationData = new PaginationData();
         paginationData.setPageSize(5);
         SimpleListProvider<String> listProvider = new SimpleListProvider<String>(list);
@@ -212,7 +214,7 @@ public class PaginatorTest {
 
     @Test
     public void testDynamicGoLast() {
-        final PaginationList list = createNumberList(15);
+        final List<String> list = createNumberList(15);
         PaginationData paginationData = new PaginationData();
         paginationData.setPageSize(5);
         SimpleListProvider<String> listProvider = new SimpleListProvider<String>(list);
@@ -230,12 +232,11 @@ public class PaginatorTest {
         Assert.assertEquals(5, paginator.getPaginationData().getCurrentPage());
     }
 
-    private PaginationList createNumberList(int top) {
-        PaginationList<String> list = new PaginationList<String>();
+    private List<String> createNumberList(int top) {
+        List<String> list = new ArrayList<String>();
         for (int i = 0; i < top; i++) {
             list.add(Integer.toString(i));
         }
-        list.setTotalSize(list.size());
         return list;
     }
 }

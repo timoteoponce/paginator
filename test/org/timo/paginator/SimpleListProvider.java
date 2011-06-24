@@ -4,30 +4,32 @@
  */
 package org.timo.paginator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author timoteo
  */
 public class SimpleListProvider<T> implements ListProvider<T> {
 
-    private PaginationList<T> sourceList;
+    private List<T> sourceList;
 
-    public SimpleListProvider(PaginationList<T> sourceList) {
+    public SimpleListProvider(List<T> sourceList) {
         this.sourceList = sourceList;
     }
 
-    public PaginationList<T> getSourceList() {
+    public List<T> getSourceList() {
         return sourceList;
     }
 
-    public void setSourceList(PaginationList<T> sourceList) {
+    public void setSourceList(List<T> sourceList) {
         this.sourceList = sourceList;
     }
 
-    public PaginationList<T> provideList(RangeProvider rangeProvider) {
-        PaginationList<T> result = new PaginationList<T>();
-        result.setTotalSize(sourceList.getTotalSize());
-        Range range = rangeProvider.getRange(sourceList.getTotalSize());
+    public List<T> provideList(RangeProvider rangeProvider) {
+        List<T> result = new ArrayList<T>();
+        Range range = rangeProvider.getRange(sourceList.size());
         result.addAll(sourceList.subList(range.getFromIndex(), range.getToIndex()));
         return result;
     }

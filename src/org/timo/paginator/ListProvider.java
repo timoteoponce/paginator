@@ -4,11 +4,13 @@
  */
 package org.timo.paginator;
 
+import java.util.List;
+
 /**
  *
  * @author timoteo
  */
 public interface ListProvider<T> {
 
-    PaginationList<T> provideList(RangeProvider rangeProvider);
+    List<T> provideList(RangeProvider rangeProvider);
 }

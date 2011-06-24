@@ -58,10 +58,9 @@ public class Paginator<T> {
     }
 
     public void refresh() {
-        PaginationList<T> list = listProvider.provideList(paginationData);
+        List<T> list = listProvider.provideList(paginationData);
         this.resultList.clear();
         this.resultList.addAll(list);
-        this.paginationData.setTotalSize(list.getTotalSize());
         setDirty(false);
     }
 
