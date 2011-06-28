@@ -112,6 +112,7 @@ public class PaginationDataTest {
     public void testEvenChecks() {
         PaginationData paginationData = new PaginationData();
         paginationData.setTotalSize(6);
+        paginationData.setPageSize(1);
         paginationData.setCurrentPage(2);
         //
         Assert.assertEquals(true, paginationData.hasNextPage());

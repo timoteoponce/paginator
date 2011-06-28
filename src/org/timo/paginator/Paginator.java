@@ -13,23 +13,25 @@ import java.util.List;
  */
 public class Paginator<T> {
 
+    public static final int DEFAULT_PAGE_SIZE = 5;
     private final PaginationData paginationData;
     private final ListProvider<T> listProvider;
     private final List<T> resultList = new ArrayList<T>();
     private boolean dirty = true;
 
-    public Paginator(PaginationData paginationData, ListProvider<T> listProvider) {
-        this.paginationData = paginationData;
+    public Paginator(final ListProvider<T> listProvider) {
+        this(listProvider, 1);
+    }
+
+    public Paginator(final ListProvider<T> listProvider, final int pageSize) {
+        this.paginationData = new PaginationData();
         this.listProvider = listProvider;
+        this.paginationData.setPageSize(pageSize);
     }
 
     public List<T> getList() {
         init();
         return resultList;
-    }
-
-    public PaginationData getPaginationData() {
-        return paginationData;
     }
 
     public void goFirstPage() {
@@ -85,5 +87,50 @@ public class Paginator<T> {
         if (isDirty()) {
             refresh();
         }
+    }
+
+    /** masking PaginationData elements **/
+    public int getCurrentPage() {
+        return paginationData.getCurrentPage();
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.paginationData.setCurrentPage(currentPage);
+    }
+
+    public int getPageSize() {
+        return paginationData.getPageSize();
+    }
+
+    public void setPageSize(int pageSize) {
+        this.paginationData.setPageSize(pageSize);
+    }
+
+    public int getTotalSize() {
+        return paginationData.getTotalSize();
+    }
+
+    public int getNextPage() {
+        return paginationData.getNextPage();
+    }
+
+    public int getPreviousPage() {
+        return paginationData.getPreviousPage();
+    }
+
+    public int getLastPage() {
+        return paginationData.getLastPage();
+    }
+
+    public boolean hasNextPage() {
+        return paginationData.hasNextPage();
+    }
+
+    public boolean hasPreviousPage() {
+        return paginationData.hasPreviousPage();
+    }
+
+    public boolean isEmpty() {
+        return paginationData.isEmpty();
     }
 }

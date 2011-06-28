@@ -8,16 +8,16 @@ package org.timo.paginator;
  *
  * @author timoteo
  */
-public class PaginationData implements RangeProvider {
+class PaginationData implements RangeProvider {
 
     private int currentPage = 1;
-    private int pageSize = 1;
+    private int pageSize = Paginator.DEFAULT_PAGE_SIZE;
     private int totalSize;
 
     public int getCurrentPage() {
         int lastPage = getLastPage();
-        if (currentPage > lastPage) {            
-            this.currentPage = lastPage;            
+        if (currentPage > lastPage) {
+            this.currentPage = lastPage;
         }
         return currentPage;
     }
@@ -111,7 +111,7 @@ public class PaginationData implements RangeProvider {
 
     public void clear() {
         currentPage = 1;
-        pageSize = 1;
+        pageSize = Paginator.DEFAULT_PAGE_SIZE;
         totalSize = 0;
     }
 }
