@@ -119,6 +119,7 @@ public class PaginatorTest {
     public void testGoLast() {
         final List<String> list = createNumberList(15);
         Paginator<String> paginator = new Paginator<String>(new SimpleListProvider<String>(list), 5);
+        paginator.refresh();
 
         paginator.goLastPage();
         Assert.assertEquals(3, paginator.getCurrentPage());
@@ -131,7 +132,8 @@ public class PaginatorTest {
         final List<String> list = createNumberList(15);
         SimpleListProvider<String> listProvider = new SimpleListProvider<String>(list);
         Paginator<String> paginator = new Paginator<String>(listProvider, 5);
-
+        paginator.refresh();
+        
         paginator.goLastPage();
         Assert.assertEquals(3, paginator.getCurrentPage());
 
@@ -202,16 +204,19 @@ public class PaginatorTest {
         final List<String> list = createNumberList(15);
         SimpleListProvider<String> listProvider = new SimpleListProvider<String>(list);
         Paginator<String> paginator = new Paginator<String>(listProvider, 5);
+        paginator.refresh();
 
         paginator.goLastPage();
         Assert.assertEquals(3, paginator.getCurrentPage());
 
         listProvider.setSourceList(createNumberList(5));
-        paginator.goLastPage();
+        paginator.refresh();
+        paginator.goLastPage();        
         Assert.assertEquals(1, paginator.getCurrentPage());
 
         listProvider.setSourceList(createNumberList(25));
-        paginator.goLastPage();
+        paginator.refresh();
+        paginator.goLastPage();        
         Assert.assertEquals(5, paginator.getCurrentPage());
     }
 

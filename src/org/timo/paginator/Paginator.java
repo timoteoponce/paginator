@@ -35,56 +35,42 @@ public class Paginator<T> {
     }
 
     public void goFirstPage() {
-        init();
         paginationData.setCurrentPage(paginationData.getFirstPage());
         markAsDirty();
+        init();
     }
 
     public void goPreviousPage() {
-        init();
         paginationData.setCurrentPage(paginationData.getPreviousPage());
         markAsDirty();
+        init();
     }
 
     public void goNextPage() {
-        init();
         paginationData.setCurrentPage(paginationData.getNextPage());
         markAsDirty();
-
+        init();
     }
 
     public void goLastPage() {
-        init();
         paginationData.setCurrentPage(paginationData.getLastPage());
         markAsDirty();
+        init();
     }
 
     public void refresh() {
-        List<T> list = listProvider.provideList(paginationData);
         this.resultList.clear();
-        this.resultList.addAll(list);
-        setDirty(false);
-    }
-
-    private boolean isDirty() {
-        return dirty;
-    }
-
-    private void setDirty(boolean dirty) {
-        this.dirty = dirty;
-    }
-
-    private void markAsDirty() {
-        this.dirty = true;
+        this.resultList.addAll(listProvider.provideList(paginationData));
+        this.dirty = false;
     }
 
     public void clear() {
-        markAsDirty();
+        this.resultList.clear();
         this.paginationData.clear();
     }
 
     public void init() {
-        if (isDirty()) {
+        if (dirty) {
             refresh();
         }
     }
@@ -132,5 +118,9 @@ public class Paginator<T> {
 
     public boolean isEmpty() {
         return paginationData.isEmpty();
+    }
+
+    private void markAsDirty() {
+        this.dirty = true;
     }
 }
