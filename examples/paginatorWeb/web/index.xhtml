@@ -23,23 +23,21 @@
             </h:dataTable>
             <hr/>
             <h:panelGrid columns="4">
-                <h:commandLink value="first" action="#{personBean.paginator.refresh}" disabled="#{personBean.paginator.hasFirstPage()}">
-                    <f:param name="currentPage" value="#{personBean.paginator.firstPage}"/>
-                </h:commandLink>
-                <h:commandLink value="prev" action="#{personBean.paginator.refresh}" disabled="#{not personBean.paginator.hasPreviousPage()}">
-                    <f:param name="currentPage" value="#{personBean.paginator.previousPage}"/>
-                </h:commandLink>
-                <h:commandLink value="next" action="#{personBean.paginator.refresh}" disabled="#{not personBean.paginator.hasNextPage()}">
-                    <f:param name="currentPage" value="#{personBean.paginator.nextPage}"/>
-                </h:commandLink>
-                <h:commandLink value="last" action="#{personBean.paginator.refresh}" disabled="#{personBean.paginator.hasLastPage()}">
-                    <f:param name="currentPage" value="#{personBean.paginator.lastPage}"/>
-                </h:commandLink>
-                <f:metadata>
-                    <f:viewParam id="pageSize" name="pageSize" value="#{personBean.paginator.pageSize}"/>
-                    <f:viewParam id="currentPage" name="currentPage" value="#{personBean.paginator.currentPage}"/>
-                </f:metadata>
+                <h:commandLink value="first" action="#{personBean.paginator.goFirstPage}" disabled="#{personBean.paginator.hasFirstPage()}"/>
+                <h:commandLink value="prev" action="#{personBean.paginator.goPreviousPage}" />
+                <h:commandLink value="next" action="#{personBean.paginator.goNextPage}" />
+                <h:commandLink value="last" action="#{personBean.paginator.goLastPage}" disabled="#{personBean.paginator.hasLastPage()}"/>
             </h:panelGrid>
+            <h:panelGroup>
+                <h:outputLabel value="PageSize"/>
+                <h:inputText value="#{personBean.paginator.pageSize}"/>
+                <h:commandButton value="refresh" action="#{personBean.paginator.refresh}"/>
+            </h:panelGroup>
+
+            <f:metadata>
+                <f:viewParam id="pageSize" name="pageSize" value="#{personBean.paginator.pageSize}"/>
+                <f:viewParam id="currentPage" name="currentPage" value="#{personBean.paginator.currentPage}"/>
+            </f:metadata>
             
             <h:outputText value="#{personBean.paginator.currentPage} of #{personBean.paginator.lastPage} - #{personBean.paginator.totalSize}"/>
 

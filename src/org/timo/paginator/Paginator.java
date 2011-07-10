@@ -36,22 +36,22 @@ public class Paginator<T> {
     }
 
     public void goFirstPage() {
-        paginationData.setCurrentPage(paginationData.getFirstPage());
+        paginationData.setCurrentPage(getFirstPage());
         markAsDirty();
     }
 
     public void goPreviousPage() {
-        paginationData.setCurrentPage(paginationData.getPreviousPage());
+        paginationData.setCurrentPage(getPreviousPage());
         markAsDirty();
     }
 
     public void goNextPage() {
-        paginationData.setCurrentPage(paginationData.getNextPage());
+        paginationData.setCurrentPage(getNextPage());
         markAsDirty();
     }
 
     public void goLastPage() {
-        paginationData.setCurrentPage(paginationData.getLastPage());
+        paginationData.setCurrentPage(getLastPage());
         markAsDirty();
     }
 
