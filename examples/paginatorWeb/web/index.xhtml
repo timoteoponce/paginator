@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        Hello from Facelets
+        <h:form>
+            <h:commandButton value="Create person" action="#{personBean.createPerson}"/>
+
+            <h:dataTable value="#{personBean.paginator.list}" var="_person">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    <h:outputText value="#{_person.id}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:outputText value="#{_person.name}"/>
+                </h:column>
+            </h:dataTable>
+            <hr/>
+            <h:panelGrid columns="4">
+                <h:commandLink value="first" action="#{personBean.paginator.refresh}" disabled="#{personBean.paginator.hasFirstPage()}">
+                    <f:param name="currentPage" value="#{personBean.paginator.firstPage}"/>
+                </h:commandLink>
+                <h:commandLink value="prev" action="#{personBean.paginator.refresh}" disabled="#{not personBean.paginator.hasPreviousPage()}">
+                    <f:param name="currentPage" value="#{personBean.paginator.previousPage}"/>
+                </h:commandLink>
+                <h:commandLink value="next" action="#{personBean.paginator.refresh}" disabled="#{not personBean.paginator.hasNextPage()}">
+                    <f:param name="currentPage" value="#{personBean.paginator.nextPage}"/>
+                </h:commandLink>
+                <h:commandLink value="last" action="#{personBean.paginator.refresh}" disabled="#{personBean.paginator.hasLastPage()}">
+                    <f:param name="currentPage" value="#{personBean.paginator.lastPage}"/>
+                </h:commandLink>
+                <f:metadata>
+                    <f:viewParam id="pageSize" name="pageSize" value="#{personBean.paginator.pageSize}"/>
+                    <f:viewParam id="currentPage" name="currentPage" value="#{personBean.paginator.currentPage}"/>
+                </f:metadata>
+            </h:panelGrid>
+            
+            <h:outputText value="#{personBean.paginator.currentPage} of #{personBean.paginator.lastPage} - #{personBean.paginator.totalSize}"/>
+
+        </h:form>
+    </h:body>
+</html>
+
