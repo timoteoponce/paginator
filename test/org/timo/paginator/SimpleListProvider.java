@@ -6,6 +6,8 @@ package org.timo.paginator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,6 +16,8 @@ import java.util.List;
 public class SimpleListProvider<T> implements ListProvider<T> {
 
     private List<T> sourceList;
+
+    private int requestsCount;
 
     public SimpleListProvider(List<T> sourceList) {
         this.sourceList = sourceList;
@@ -31,6 +35,9 @@ public class SimpleListProvider<T> implements ListProvider<T> {
         List<T> result = new ArrayList<T>();
         Range range = rangeProvider.getRange(sourceList.size());
         result.addAll(sourceList.subList(range.getFromIndex(), range.getToIndex()));
+
+        requestsCount++;
+        Logger.getLogger(SimpleListProvider.class.getName()).info("RequestsCount : "+requestsCount);
         return result;
     }
 

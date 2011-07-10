@@ -4,11 +4,13 @@
  */
 package org.timo.paginator;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author timoteo
+ * @author Timoteo Ponce
+ * @author Rory Sandoval - original implementation
  */
 class PaginationData implements RangeProvider {
 
@@ -21,7 +23,6 @@ class PaginationData implements RangeProvider {
     private int lastPage;
 
     protected void init() {
-        log.info("Calculating...");
         if (totalSize < 0) {
             totalSize = 0;
         }
@@ -41,7 +42,7 @@ class PaginationData implements RangeProvider {
         if (currentPage > lastPage) {
             currentPage = lastPage;
         }
-        if (!(currentPage > 0 && currentPage <= getLastPage())) {
+        if (!(currentPage > 0 && currentPage <= lastPage)) {
             currentPage = 1;
         }
         //
@@ -59,7 +60,7 @@ class PaginationData implements RangeProvider {
         if (toIndex > totalSize) {
             toIndex = totalSize;
         }
-        log.info("Calculated : "+toString());
+        log.log(Level.FINE, "Calculated : " + toString());
     }
 
     public int getCurrentPage() {
@@ -68,7 +69,6 @@ class PaginationData implements RangeProvider {
 
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
-        log.info("setCurrent : "+toString());
     }
 
     public int getPageSize() {
@@ -115,7 +115,6 @@ class PaginationData implements RangeProvider {
 
     public int getLastPage() {
         return lastPage;
-
     }
 
     public boolean hasNextPage() {
@@ -124,6 +123,14 @@ class PaginationData implements RangeProvider {
 
     public boolean hasPreviousPage() {
         return currentPage > 1;
+    }
+
+    public boolean hasFirstPage() {
+        return currentPage == 1;
+    }
+
+    public boolean hasLastPage() {
+        return currentPage == getLastPage();
     }
 
     public boolean isEmpty() {

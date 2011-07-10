@@ -40,30 +40,36 @@ public class PaginatorTest {
         Assert.assertEquals("4", paginator.getList().get(4));
 
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(2, paginator.getCurrentPage());
         Assert.assertEquals("5", paginator.getList().get(0));
         Assert.assertEquals("9", paginator.getList().get(4));
 
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(3, paginator.getCurrentPage());
         Assert.assertEquals("10", paginator.getList().get(0));
         Assert.assertEquals("14", paginator.getList().get(4));
 
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(4, paginator.getCurrentPage());
         Assert.assertEquals("15", paginator.getList().get(0));
         Assert.assertEquals("19", paginator.getList().get(4));
 
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(5, paginator.getCurrentPage());
         Assert.assertEquals("20", paginator.getList().get(0));
         Assert.assertEquals("24", paginator.getList().get(4));
 
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(5, paginator.getCurrentPage());
         Assert.assertEquals("24", paginator.getList().get(4));
 
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(5, paginator.getCurrentPage());
         Assert.assertEquals("24", paginator.getList().get(4));
     }
@@ -77,12 +83,14 @@ public class PaginatorTest {
         Assert.assertEquals("4", paginator.getList().get(4));
 
         paginator.goPreviousPage();
+        paginator.getList();
         Assert.assertEquals(1, paginator.getCurrentPage());
         Assert.assertEquals("0", paginator.getList().get(0));
         Assert.assertEquals("4", paginator.getList().get(4));
 
         paginator.goNextPage();
         paginator.goPreviousPage();
+        paginator.getList();
         Assert.assertEquals(1, paginator.getCurrentPage());
         Assert.assertEquals("0", paginator.getList().get(0));
         Assert.assertEquals("4", paginator.getList().get(4));
@@ -90,6 +98,7 @@ public class PaginatorTest {
         paginator.goNextPage();
         paginator.goNextPage();
         paginator.goPreviousPage();
+        paginator.getList();
         Assert.assertEquals(2, paginator.getCurrentPage());
         Assert.assertEquals("5", paginator.getList().get(0));
         Assert.assertEquals("9", paginator.getList().get(4));
@@ -105,11 +114,13 @@ public class PaginatorTest {
 
         paginator.goNextPage();
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(3, paginator.getCurrentPage());
         Assert.assertEquals("10", paginator.getList().get(0));
         Assert.assertEquals("14", paginator.getList().get(4));
 
         paginator.goFirstPage();
+        paginator.getList();
         Assert.assertEquals(1, paginator.getCurrentPage());
         Assert.assertEquals("0", paginator.getList().get(0));
         Assert.assertEquals("4", paginator.getList().get(4));
@@ -122,6 +133,7 @@ public class PaginatorTest {
         paginator.refresh();
 
         paginator.goLastPage();
+        paginator.getList();
         Assert.assertEquals(3, paginator.getCurrentPage());
         Assert.assertEquals("10", paginator.getList().get(0));
         Assert.assertEquals("14", paginator.getList().get(4));
@@ -135,6 +147,7 @@ public class PaginatorTest {
         paginator.refresh();
         
         paginator.goLastPage();
+        paginator.getList();
         Assert.assertEquals(3, paginator.getCurrentPage());
 
         listProvider.setSourceList(createNumberList(5));
@@ -161,18 +174,22 @@ public class PaginatorTest {
         Paginator<String> paginator = new Paginator<String>(listProvider, 5);
 
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(2, paginator.getCurrentPage());
 
         listProvider.setSourceList(createNumberList(5));
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(1, paginator.getCurrentPage());
 
         listProvider.setSourceList(createNumberList(15));
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(2, paginator.getCurrentPage());
 
         listProvider.setSourceList(createNumberList(15));
         paginator.goNextPage();
+        paginator.getList();
         Assert.assertEquals(3, paginator.getCurrentPage());
     }
 
@@ -184,18 +201,22 @@ public class PaginatorTest {
 
         paginator.goNextPage();
         paginator.goPreviousPage();
+        paginator.getList();
         Assert.assertEquals(1, paginator.getCurrentPage());
 
         listProvider.setSourceList(createNumberList(5));
         paginator.goPreviousPage();
+        paginator.getList();
         Assert.assertEquals(1, paginator.getCurrentPage());
 
         listProvider.setSourceList(createNumberList(15));
         paginator.goNextPage();
         paginator.goNextPage();
+        paginator.getList();
 
         listProvider.setSourceList(createNumberList(5));
         paginator.goPreviousPage();
+        paginator.getList();
         Assert.assertEquals(1, paginator.getCurrentPage());
     }
 

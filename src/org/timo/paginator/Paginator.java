@@ -4,19 +4,20 @@
  */
 package org.timo.paginator;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  *
  * @author Timoteo Ponce
+ * @author Rory Sandoval - original implementation
  */
 public class Paginator<T> {
 
     public static final int DEFAULT_PAGE_SIZE = 5;
     private final PaginationData paginationData;
     private final ListProvider<T> listProvider;
-    private final List<T> resultList = new ArrayList<T>();
+    private List<T> resultList;
     private boolean dirty = true;
 
     public Paginator(final ListProvider<T> listProvider) {
@@ -37,30 +38,28 @@ public class Paginator<T> {
     public void goFirstPage() {
         paginationData.setCurrentPage(paginationData.getFirstPage());
         markAsDirty();
-        init();
     }
 
     public void goPreviousPage() {
         paginationData.setCurrentPage(paginationData.getPreviousPage());
         markAsDirty();
-        init();
     }
 
     public void goNextPage() {
         paginationData.setCurrentPage(paginationData.getNextPage());
         markAsDirty();
-        init();
     }
 
     public void goLastPage() {
         paginationData.setCurrentPage(paginationData.getLastPage());
         markAsDirty();
-        init();
     }
 
     public void refresh() {
-        this.resultList.clear();
-        this.resultList.addAll(listProvider.provideList(paginationData));
+        this.resultList = listProvider.provideList(paginationData);
+        if(resultList == null || resultList.isEmpty()){
+            resultList = Collections.EMPTY_LIST;
+        }
         this.dirty = false;
     }
 
@@ -96,6 +95,10 @@ public class Paginator<T> {
         return paginationData.getTotalSize();
     }
 
+     public int getFirstPage() {
+        return paginationData.getFirstPage();
+    }
+
     public int getNextPage() {
         return paginationData.getNextPage();
     }
@@ -114,6 +117,14 @@ public class Paginator<T> {
 
     public boolean hasPreviousPage() {
         return paginationData.hasPreviousPage();
+    }
+
+    public boolean hasFirstPage() {
+        return paginationData.hasFirstPage();
+    }
+
+    public boolean hasLastPage() {
+        return paginationData.hasLastPage();
     }
 
     public boolean isEmpty() {
