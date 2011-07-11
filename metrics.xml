@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="metrics" default="build" basedir=".">
+
+    <property file="build.properties" />
+    <import file="${classpath.location}" />
+
+    <path id="compile.classpath">
+        <fileset dir="lib" includes="*.jar" />
+    </path>
+
+    <path id="src.path">
+        <pathelement location="${project.src}" />
+    </path>
+
+    <path id="run.classpath">
+        <path refid="compile.classpath" />
+        <path location="${project.build}" />
+        <path location="${project.config}" />
+        <path location="${project.resources}" />
+    </path>
+
+    <path id="test.classpath">
+        <path refid="run.classpath" />
+        <path refid="junit.classpath" />
+    </path>
+
+    <target name="init">
+        <mkdir dir="${project.config}" />
+        <mkdir dir="${project.resources}" />
+        <mkdir dir="${project.src}" />
+        <mkdir dir="${project.test}" />
+        <mkdir dir="${project.lib}" />
+    </target>
+
+    <target name="compile-test" depends="compile">
+        <javac encoding="iso-8859-1" destdir="${project.build}" classpathref="test.classpath" includes="**/*.java" debug="true">
+            <src path="${project.test}" />
+        </javac>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${project.build}" />
+    </target>
+
+    <target name="build" depends="init,compile,compile-test" description="Build the project incrementally.">
+    </target>
+
+    <target name="clean">
+        <delete dir="${project.build}" />
+    </target>
+
+    <target name="compile" depends="prepare" description="Compile the sources (checked in and generated)">
+        <copy todir="${project.build}">
+            <fileset dir="${project.src}">
+                <include name="**/*.properties" />
+            </fileset>
+            <fileset dir="${project.config}">
+                <include name="*.properties" />
+                <include name="*.xml" />
+            </fileset>
+        </copy>
+        <javac encoding="iso-8859-1" destdir="${project.build}" classpathref="compile.classpath" includes="**/*.java" debug="true">
+            <src path="${project.src}" />
+        </javac>
+    </target>
+
+    <target name="test" depends="compile-test">
+        <property name="junit.dest" value="${project.build.report}/junit" />
+        <mkdir dir="${junit.dest}" />
+
+        <junit fork="yes" forkmode="once" printsummary="yes" haltonfailure="yes">
+            <jvmarg value="-Dcurrent.env=test"/>
+            <classpath>
+                <path refid="test.classpath" />
+            </classpath>
+            <formatter type="plain" usefile="false" />
+            <formatter type="xml" />
+            <batchtest todir="${junit.dest}">
+                <fileset dir="${project.test}">
+                    <include name="**/*Test.java" />
+                </fileset>
+            </batchtest>
+        </junit>
+        <junitreport todir="${junit.dest}">
+            <fileset dir="${junit.dest}" includes="TEST-*.xml" />
+            <report format="frames" todir="${junit.dest}" />
+        </junitreport>
+    </target>
+
+	<!-- QA -->
+    <target name="qa" depends="build,cpd,findbugs,pmd" />
+
+    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugs.classpath" />
+    <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
+    <taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" classpathref="pmd.classpath" />
+
+    <target name="findbugs" depends="build">
+        <property name="findbugs.dest" value="${project.build.report}/findbugs" />
+        <mkdir dir="${findbugs.dest}" />
+
+        <findbugs home="${findbugs.home}" output="xml:withMessages" outputFile="${findbugs.dest}/${ant.project.name}-fb.xml">
+            <auxClasspath refid="compile.classpath" />
+            <sourcePath path="${project.src}" />
+            <class location="${project.build}" />
+        </findbugs>
+    </target>
+
+    <target name="fb-gui" depends="findbugs">
+        <java jar="${findbugs.home}/lib/findbugs.jar" fork="true">
+            <jvmarg value="-Xmx256M" />
+            <arg value="-project" />
+            <arg value="${findbugs.dest}/${ant.project.name}-fb.xml" />
+            <sysproperty key="findbugs.home" value="${findbugs.home}" />
+        </java>
+    </target>
+
+    <target name="pmd" depends="build">
+        <property name="pmd.dest" value="${project.build.report}/pmd" />
+        <mkdir dir="${pmd.dest}" />
+
+        <pmd shortFilenames="true">
+            <ruleset>rulesets/favorites.xml</ruleset>
+            <ruleset>basic</ruleset>
+            <formatter type="xml" toFile="${pmd.dest}/${ant.project.name}-pmd.xml" linkPrefix="http://pmd.sourceforge.net/xref/" />
+            <fileset dir="${project.src}">
+                <include name="**/*.java" />
+            </fileset>
+        </pmd>
+    </target>
+
+    <target name="cpd" depends="build">
+        <property name="cpd.dest" value="${project.build.report}/cpd" />
+        <mkdir dir="${cpd.dest}" />
+
+        <cpd minimumTokenCount="70" format="xml" outputFile="${cpd.dest}/cpd.xml">
+            <fileset dir="${project.src}">
+                <include name="**/*.java" />
+            </fileset>
+        </cpd>
+    </target>
+
+</project>
