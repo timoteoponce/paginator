@@ -8,7 +8,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * Core component handling pagination operations. It provides pagination
+ * operations and pages information.
+ * @param <T> working object type
  * @author Timoteo Ponce
  * @author Rory Sandoval - original implementation
  */
@@ -30,31 +32,54 @@ public class Paginator<T> {
         this.paginationData.setPageSize(pageSize);
     }
 
+    /**
+     * Returns current page's list. If there's not result at all, it returns
+     * an empty list.
+     * @return current page's list, or an empty list when there's not data
+     */
     public List<T> getList() {
         init();
         return resultList;
     }
 
+    /**
+     * Redirects to the first page.
+     */
     public void goFirstPage() {
         paginationData.setCurrentPage(getFirstPage());
         markAsDirty();
     }
 
+    /**
+     * Redirects to the previous page if available, if not
+     * current page's value remains.
+     */
     public void goPreviousPage() {
         paginationData.setCurrentPage(getPreviousPage());
         markAsDirty();
     }
 
+    /**
+     * Redirects to the next page if available, if not
+     * current page's value remains.
+     */
     public void goNextPage() {
         paginationData.setCurrentPage(getNextPage());
         markAsDirty();
     }
 
+    /**
+     * Redirects to the last page if available, if not
+     * current page's value remains.
+     */
     public void goLastPage() {
         paginationData.setCurrentPage(getLastPage());
         markAsDirty();
     }
 
+    /**
+     * Refreshes current result list.
+     */
     public void refresh() {
         this.resultList = listProvider.provideList(paginationData);
         if(resultList == null || resultList.isEmpty()){
@@ -63,18 +88,24 @@ public class Paginator<T> {
         this.dirty = false;
     }
 
+    /**
+     * Clears current result list and pagination data. It
+     * basically resets the component.
+     */
     public void clear() {
         this.resultList.clear();
         this.paginationData.clear();
     }
 
-    public void init() {
+    void init() {
         if (dirty) {
             refresh();
         }
     }
 
-    /** masking PaginationData elements **/
+    /** masking PaginationData elements *
+     * 
+     */
     public int getCurrentPage() {
         return paginationData.getCurrentPage();
     }

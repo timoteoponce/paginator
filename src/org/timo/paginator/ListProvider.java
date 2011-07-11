@@ -7,10 +7,24 @@ package org.timo.paginator;
 import java.util.List;
 
 /**
- *
- * @author timoteo
+ * Client-provider component in charge of providing a segmented
+ * list using SegmentProvider's information.
+ * @param <T>  working object type
+ * @author Timoteo Ponce
  */
 public interface ListProvider<T> {
 
-    List<T> provideList(RangeProvider rangeProvider);
+    /**
+     * A list provider must provide a list/collection segment within
+     * given range.
+     * Usage:
+     * <pre>
+     * List<String> myList = createTestList();
+     * Segment segment = segmentProvider.getSegment(myList.size());
+     * return myList.subList(segment.getFromIndex(), segment.getToIndex());
+     * </pre>
+     * @param rangeProvider descriptor component that provides information about the current segment [from-to]
+     * @return list segment(can be null)
+     */
+    List<T> provideList(SegmentProvider rangeProvider);
 }

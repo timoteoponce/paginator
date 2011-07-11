@@ -8,11 +8,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Base model component for pagination operations, this component
+ * calculates the list segments and handles page-transitions.
  * @author Timoteo Ponce
  * @author Rory Sandoval - original implementation
  */
-class PaginationData implements RangeProvider {
+class PaginationData implements SegmentProvider {
 
     private static final Logger log = Logger.getLogger(PaginationData.class.getName());
     private int currentPage = 1;
@@ -23,6 +24,7 @@ class PaginationData implements RangeProvider {
     private int lastPage;
 
     protected void init() {
+        //
         if (totalSize < 0) {
             totalSize = 0;
         }
@@ -48,7 +50,6 @@ class PaginationData implements RangeProvider {
         //
         if (!isEmpty() && currentPage > 1) {
             fromIndex = (currentPage - 1) * pageSize;
-
             if ((fromIndex + 1) > totalSize) {
                 fromIndex = totalSize - (pageSize - pageSize % totalSize);
             }
@@ -87,10 +88,10 @@ class PaginationData implements RangeProvider {
         this.totalSize = totalSize;
     }
 
-    public Range getRange(int totalSize) {
+    public Segment getSegment(int totalSize) {
         setTotalSize(totalSize);
         init();
-        return new Range(getFromIndex(), getToIndex());
+        return new Segment(getFromIndex(), getToIndex());
     }
 
     public int getFromIndex() {

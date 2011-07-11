@@ -19,7 +19,7 @@ public class PaginatorTest {
     public void testWithEmptyResults() {
         Paginator<String> paginator = new Paginator<String>(new ListProvider<String>() {
 
-            public List<String> provideList(RangeProvider rangeProvider) {
+            public List<String> provideList(SegmentProvider rangeProvider) {
                 return new ArrayList<String>();
             }
         });

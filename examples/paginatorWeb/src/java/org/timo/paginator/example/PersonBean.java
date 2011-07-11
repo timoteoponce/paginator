@@ -17,8 +17,8 @@ import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 import org.timo.paginator.ListProvider;
 import org.timo.paginator.Paginator;
-import org.timo.paginator.Range;
-import org.timo.paginator.RangeProvider;
+import org.timo.paginator.Segment;
+import org.timo.paginator.SegmentProvider;
 
 /**
  *
@@ -53,10 +53,10 @@ public class PersonBean implements ListProvider<Person>{
         }
     }
 
-    public List<Person> provideList(RangeProvider rangeProvider) {
+    public List<Person> provideList(SegmentProvider rangeProvider) {
         Query query = em.createQuery("SELECT COUNT(p) FROM Person p");
         int totalSize = ((Number)query.getSingleResult()).intValue();
-        Range range = rangeProvider.getRange(totalSize);
+        Segment range = rangeProvider.getSegment(totalSize);
         query = em.createQuery("SELECT p FROM Person p ORDER BY p.id ASC");
         query.setFirstResult(range.getFromIndex());
         query.setMaxResults(range.getToIndex() - range.getFromIndex());

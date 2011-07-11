@@ -5,23 +5,32 @@
 package org.timo.paginator;
 
 /**
- *
- * @author timoteo
+ * Simple POJO component providing information about
+ * a segment information.
+ * @author Timoteo Ponce
  */
-public class Range {
+public class Segment {
 
     private final int fromIndex;
     private final int toIndex;
 
-    public Range(int fromIndex, int toIndex) {
+    public Segment(int fromIndex, int toIndex) {
         this.fromIndex = fromIndex;
         this.toIndex = toIndex;
     }
 
+    /**
+     * Segment start point.
+     * @return
+     */
     public int getFromIndex() {
         return fromIndex;
     }
 
+    /**
+     * Segment end point.
+     * @return
+     */
     public int getToIndex() {
         return toIndex;
     }
