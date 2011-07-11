@@ -29,7 +29,7 @@
         <mkdir dir="${project.resources}" />
         <mkdir dir="${project.src}" />
         <mkdir dir="${project.test}" />
-        <mkdir dir="${project.lib}" />
+        <mkdir dir="lib" />
     </target>
 
     <target name="compile-test" depends="compile">
