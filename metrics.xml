@@ -42,7 +42,7 @@
         <mkdir dir="${project.build}" />
     </target>
 
-    <target name="build" depends="init,compile,compile-test" description="Build the project incrementally.">
+    <target name="build" depends="init,compile,test" description="Build the project incrementally.">
     </target>
 
     <target name="clean">
