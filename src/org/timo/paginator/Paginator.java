@@ -97,6 +97,7 @@ public class Paginator<T> {
         	this.resultList.clear();
 		}
         this.paginationData.clear();
+		markAsDirty();
     }
 
     void init() {
