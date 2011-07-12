@@ -119,7 +119,7 @@ class PaginationData implements SegmentProvider {
     }
 
     public boolean hasNextPage() {
-        return !isEmpty() && currentPage < getLastPage();
+        return currentPage < getLastPage();
     }
 
     public boolean hasPreviousPage() {
@@ -127,11 +127,11 @@ class PaginationData implements SegmentProvider {
     }
 
     public boolean hasFirstPage() {
-        return currentPage == 1;
+        return currentPage != 1;
     }
 
     public boolean hasLastPage() {
-        return currentPage == getLastPage();
+        return currentPage != getLastPage();
     }
 
     public boolean isEmpty() {

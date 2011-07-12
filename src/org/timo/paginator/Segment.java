@@ -35,6 +35,10 @@ public class Segment {
         return toIndex;
     }
 
+	public int getSize(){
+		return toIndex - fromIndex;
+	}
+
     @Override
     public String toString() {
         return "Range{" + "fromIndex=" + fromIndex + ",toIndex=" + toIndex + '}';

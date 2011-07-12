@@ -93,7 +93,9 @@ public class Paginator<T> {
      * basically resets the component.
      */
     public void clear() {
-        this.resultList.clear();
+		if(resultList != null){
+        	this.resultList.clear();
+		}
         this.paginationData.clear();
     }
 
