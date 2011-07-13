@@ -131,7 +131,7 @@ class PaginationData implements SegmentProvider {
     }
 
     public boolean hasLastPage() {
-        return currentPage != getLastPage();
+        return !isEmpty() && (currentPage != getLastPage());
     }
 
     public boolean isEmpty() {
