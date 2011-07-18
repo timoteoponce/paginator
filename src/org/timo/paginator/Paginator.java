@@ -89,16 +89,20 @@ public class Paginator<T> {
     }
 
     /**
-     * Clears current result list and pagination data. It
+     * Clears current result list. It
      * basically resets the component.
      */
     public void clear() {
 		if(resultList != null){
         	this.resultList.clear();
 		}
-        this.paginationData.clear();
 		markAsDirty();
     }
+	
+	public void clearPagination(){
+		this.paginationData.clear();
+		markAsDirty();
+	}
 
     void init() {
         if (dirty) {
