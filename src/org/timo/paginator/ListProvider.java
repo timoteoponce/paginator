@@ -4,6 +4,7 @@
  */
 package org.timo.paginator;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * @param <T>  working object type
  * @author Timoteo Ponce
  */
-public interface ListProvider<T> {
+public interface ListProvider<T> extends Serializable{
 
     /**
      * A list provider must provide a list/collection segment within

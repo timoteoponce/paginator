@@ -4,6 +4,7 @@
  */
 package org.timo.paginator;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * @author Timoteo Ponce
  * @author Rory Sandoval - original implementation
  */
-public class Paginator<T> {
+public class Paginator<T> implements Serializable{
 
     public static final int DEFAULT_PAGE_SIZE = 5;
     private final PaginationData paginationData;

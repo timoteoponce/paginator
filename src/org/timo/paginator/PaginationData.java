@@ -4,6 +4,7 @@
  */
 package org.timo.paginator;
 
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
  * @author Timoteo Ponce
  * @author Rory Sandoval - original implementation
  */
-class PaginationData implements SegmentProvider {
+class PaginationData implements SegmentProvider,Serializable{
 
     private static final Logger log = Logger.getLogger(PaginationData.class.getName());
     private int currentPage = 1;
