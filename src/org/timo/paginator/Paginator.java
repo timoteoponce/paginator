@@ -82,7 +82,7 @@ public class Paginator<T> {
      */
     public void refresh() {
         this.resultList = listProvider.provideList(paginationData);
-        if(resultList == null || resultList.isEmpty()){
+        if (resultList == null || resultList.isEmpty()) {
             resultList = Collections.EMPTY_LIST;
         }
         this.dirty = false;
@@ -93,16 +93,16 @@ public class Paginator<T> {
      * basically resets the component.
      */
     public void clear() {
-		if(resultList != null){
-        	this.resultList.clear();
-		}
-		markAsDirty();
+        if (resultList != null) {
+            this.resultList.clear();
+        }
+        markAsDirty();
     }
-	
-	public void clearPagination(){
-		this.paginationData.clear();
-		markAsDirty();
-	}
+
+    public void clearPagination() {
+        this.paginationData.clear();
+        markAsDirty();
+    }
 
     void init() {
         if (dirty) {
@@ -112,6 +112,7 @@ public class Paginator<T> {
 
     /** masking PaginationData elements *
      * 
+     * @return 
      */
     public int getCurrentPage() {
         return paginationData.getCurrentPage();
@@ -133,7 +134,7 @@ public class Paginator<T> {
         return paginationData.getTotalSize();
     }
 
-     public int getFirstPage() {
+    public int getFirstPage() {
         return paginationData.getFirstPage();
     }
 
@@ -171,5 +172,9 @@ public class Paginator<T> {
 
     private void markAsDirty() {
         this.dirty = true;
+    }
+
+    public Iterator<T> iterator() {
+        return new Iterator(this);
     }
 }
