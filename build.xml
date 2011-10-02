@@ -72,22 +72,22 @@
 
     -->
 
-	<property file="build.properties"/>
+    <property file="build.properties"/>
 
-	<target name="dist" depends="jar">
-		<property name="distFile" value="${ant.project.name}-${application.release}.zip"/>
-		<delete file="dist/${distFile}" />
-		<mkdir dir="build/dist"/>
-		<copy todir="build/dist">
-			<fileset dir=".">
-				<include name="README"/>
-				<include name="LICENSE"/>
-				<include name="examples/"/>
-			</fileset>
-		</copy>
-		<copy tofile="build/dist/${ant.project.name}-${application.release}.jar" file="dist/${ant.project.name}.jar"/>
-		<zip destfile="dist/${distFile}">
-			<zipfileset dir="build/dist"/>
-		</zip>		
-	</target>
+    <target name="dist" depends="jar">
+        <property name="distFile" value="${ant.project.name}-${application.release}.zip"/>
+        <delete file="dist/${distFile}" />
+        <mkdir dir="build/dist"/>
+        <copy todir="build/dist">
+            <fileset dir=".">
+                <include name="README"/>
+                <include name="LICENSE"/>
+                <include name="examples/"/>
+            </fileset>
+        </copy>
+        <copy tofile="build/dist/${ant.project.name}-${application.release}.jar" file="dist/${ant.project.name}.jar"/>
+        <zip destfile="dist/${distFile}">
+            <zipfileset dir="build/dist"/>
+        </zip>
+    </target>
 </project>

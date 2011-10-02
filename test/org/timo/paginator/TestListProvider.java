@@ -11,13 +11,13 @@ import java.util.logging.Logger;
  *
  * @author timoteo
  */
-public class SimpleListProvider<T> implements ListProvider<T> {
+public class TestListProvider<T> implements ListProvider<T> {
 
     private List<T> sourceList;
 
     private int requestsCount;
 
-    public SimpleListProvider(List<T> sourceList) {
+    public TestListProvider(List<T> sourceList) {
         this.sourceList = sourceList;
     }
 
@@ -32,7 +32,7 @@ public class SimpleListProvider<T> implements ListProvider<T> {
     public List<T> provideList(SegmentProvider rangeProvider) {
         Segment segment = rangeProvider.getSegment(sourceList.size());
         requestsCount++;
-        Logger.getLogger(SimpleListProvider.class.getName()).info("RequestsCount : "+requestsCount);
+        Logger.getLogger(TestListProvider.class.getName()).info("RequestsCount : "+requestsCount);
         return sourceList.subList(segment.getFromIndex(), segment.getToIndex());
     }
 

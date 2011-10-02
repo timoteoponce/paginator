@@ -18,7 +18,7 @@ public class IteratorTest {
     @Test
     public void testGoNext() {
         final List<String> list = createNumberList(25);
-        Paginator<String> paginator = new Paginator<String>(new SimpleListProvider<String>(list), 5);
+        Paginator<String> paginator = new Paginator<String>(new TestListProvider<String>(list), 5);
         Iterator<String> iterator = paginator.iterator();
 
         Assert.assertEquals(iterator.getSelected(), "0");
@@ -33,7 +33,7 @@ public class IteratorTest {
     @Test
     public void testGoPrevious() {
         final List<String> list = createNumberList(25);
-        Paginator<String> paginator = new Paginator<String>(new SimpleListProvider<String>(list), 5);
+        Paginator<String> paginator = new Paginator<String>(new TestListProvider<String>(list), 5);
         Iterator<String> iterator = paginator.iterator();
 
         Assert.assertEquals(iterator.getSelected(), "0");
