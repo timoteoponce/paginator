@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="metrics" default="build" basedir=".">
+<project name="metrics" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <property file="build.properties" />
-    <import file="${classpath.location}" />
+    <import file="build-ivy.xml" />
+	
+	<taskdef resource="org/apache/ivy/ant/antlib.xml"
+	    	          uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+	
+	<ivy:settings file="ivysettings.xml" />
+	<ivy:cachepath pathid="classpath.test" conf="test" resolveId="test" file="ivy.xml" />
+	<ivy:cachepath pathid="classpath.qa" conf="qa" resolveId="qa" file="ivy.xml" />
 
-    <path id="compile.classpath">
+    <path id="compile.classpath">    	
         <fileset dir="lib" includes="*.jar" />
     </path>
 
@@ -21,7 +28,7 @@
 
     <path id="test.classpath">
         <path refid="run.classpath" />
-        <path refid="junit.classpath" />
+        <path refid="classpath.test" />
     </path>
 
     <target name="init">
@@ -90,30 +97,21 @@
 	<!-- QA -->
     <target name="qa" depends="build,cpd,findbugs,pmd" />
 
-    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugs.classpath" />
-    <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
-    <taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" classpathref="pmd.classpath" />
+    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="classpath.qa" />
+    <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="classpath.qa" />
+    <taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" classpathref="classpath.qa" />
 
     <target name="findbugs" depends="build">
         <property name="findbugs.dest" value="${project.build.report}/findbugs" />
         <mkdir dir="${findbugs.dest}" />
 
-        <findbugs home="${findbugs.home}" output="xml:withMessages" outputFile="${findbugs.dest}/${ant.project.name}-fb.xml">
+        <findbugs output="xml:withMessages" outputFile="${findbugs.dest}/${ant.project.name}-fb.xml">
             <auxClasspath refid="compile.classpath" />
             <sourcePath path="${project.src}" />
             <class location="${project.build}" />
         </findbugs>
     </target>
-
-    <target name="fb-gui" depends="findbugs">
-        <java jar="${findbugs.home}/lib/findbugs.jar" fork="true">
-            <jvmarg value="-Xmx256M" />
-            <arg value="-project" />
-            <arg value="${findbugs.dest}/${ant.project.name}-fb.xml" />
-            <sysproperty key="findbugs.home" value="${findbugs.home}" />
-        </java>
-    </target>
-
+	
     <target name="pmd" depends="build">
         <property name="pmd.dest" value="${project.build.report}/pmd" />
         <mkdir dir="${pmd.dest}" />

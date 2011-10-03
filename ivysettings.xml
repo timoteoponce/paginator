@@ -1,19 +1,8 @@
 <ivysettings>
     <settings defaultResolver="chained"/>
     <property name="java.net.maven.pattern" value="[organisation]/jars/[module]-[revision].[ext]"/>
-    <property name="ivy.shared.default.root"             value="/opt/projects/ivy-shared" />
-    <property name="ivy.shared.default.artifact.pattern" value="[module]/[revision]/[type]s/[artifact]-[revision].[ext]" />
     <resolvers>
-        <filesystem name="local">
-            <ivy pattern="${ivy.shared.default.root}/${ivy.shared.default.ivy.pattern}" />
-            <artifact pattern="${ivy.shared.default.root}/${ivy.shared.default.artifact.pattern}" />
-        </filesystem>
-        <filesystem name="sharedbill">
-            <ivy pattern="${ivy.shared.default.root}/${ivy.shared.default.ivy.pattern}" />
-            <artifact pattern="${ivy.shared.default.root}/${ivy.shared.default.artifact.pattern}" />
-        </filesystem>
         <chain name="chained" returnFirst="true">
-            <resolver ref="sharedbill"/>
             <ibiblio name="ibiblio" m2compatible="true"/>
             <ibiblio name="java-net-maven1" root="http://download.java.net/maven/1" pattern="${java.net.maven.pattern}" m2compatible="false"/>
             <ibiblio name="java-net-maven2" root="http://download.java.net/maven/2/" m2compatible="true"/>
@@ -23,6 +12,5 @@
             </url>
         </chain>
     </resolvers>
-
 </ivysettings>
 

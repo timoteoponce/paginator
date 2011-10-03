@@ -1,6 +1,13 @@
 <ivy-module version="2.0">
-    <info organisation="org.timo" module="paginator" revision="0.0.4"/>
-    <dependencies>
-        <dependency org="junit" name="junit" rev="4.8"/>        
-    </dependencies>
+	<info organisation="org.timo" module="paginator" revision="0.0.4" />
+	<configurations>
+		<conf name="test" />
+		<conf name="qa" />
+	</configurations>
+	<dependencies>
+		<dependency org="junit" name="junit" rev="4.8" conf="test->default" />
+		<dependency org="findbugs" name="findbugs" rev="1.0.0" conf="qa->default"/>
+		<dependency org="findbugs" name="findbugs-ant" rev="1.0.0" conf="qa->default"/>
+		<dependency org="pmd" name="pmd" rev="3.7" conf="qa->default"/>
+	</dependencies>
 </ivy-module>
