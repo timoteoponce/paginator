@@ -15,7 +15,7 @@ import java.util.List;
  * @author Timoteo Ponce
  * @author Rory Sandoval - original implementation
  */
-public class Paginator<T> implements Serializable{
+public class Paginator<T> implements Serializable {
 
     public static final int DEFAULT_PAGE_SIZE = 5;
     private final PaginationData paginationData;
@@ -31,6 +31,11 @@ public class Paginator<T> implements Serializable{
         this.paginationData = new PaginationData();
         this.listProvider = listProvider;
         this.paginationData.setPageSize(pageSize);
+    }
+
+    public Paginator(final ListProvider<T> listProvider, final PaginationData paginationData) {
+        this.paginationData = paginationData;
+        this.listProvider = listProvider;
     }
 
     /**

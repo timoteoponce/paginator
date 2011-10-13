@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * @author Timoteo Ponce
  * @author Rory Sandoval - original implementation
  */
-class PaginationData implements SegmentProvider,Serializable{
+public class PaginationData implements SegmentProvider, Serializable {
 
     private static final Logger log = Logger.getLogger(PaginationData.class.getName());
     private int currentPage = 1;
@@ -24,44 +24,21 @@ class PaginationData implements SegmentProvider,Serializable{
     private int toIndex;
     private int lastPage;
 
-    protected void init() {
-        //
-        if (totalSize < 0) {
-            totalSize = 0;
-        }
-        //
-        if (pageSize < 1) {
-            pageSize = Paginator.DEFAULT_PAGE_SIZE;
-        }
-        //
-        lastPage = getFirstPage();
-        if (!isEmpty()) {
-            lastPage = (totalSize / pageSize);
-            if ((totalSize % pageSize) > 0) {
-                lastPage++;
-            }
-        }
-        //
-        if (currentPage > lastPage) {
-            currentPage = lastPage;
-        }
-        if (!(currentPage > 0 && currentPage <= lastPage)) {
-            currentPage = 1;
-        }
-        //
-        if (!isEmpty() && currentPage > 1) {
-            fromIndex = (currentPage - 1) * pageSize;
-            if ((fromIndex + 1) > totalSize) {
-                fromIndex = totalSize - (pageSize - pageSize % totalSize);
-            }
-        } else {
-            fromIndex = 0;
-        }
-        //
-        toIndex = getFromIndex() + pageSize;
-        if (toIndex > totalSize) {
-            toIndex = totalSize;
-        }
+    public PaginationData() {
+    }
+
+    public PaginationData(int totalSize, int pageSize) {
+        this.totalSize = totalSize;
+        this.pageSize = pageSize;
+    }
+
+    public void init() {
+        calculateTotalSize();
+        calculatePageSize();
+        calculateLastPage();
+        calculateCurrentPage();
+        calculatePageStart();
+        calculatePageEnd();
         log.log(Level.FINE, "Calculated : " + toString());
     }
 
@@ -149,4 +126,54 @@ class PaginationData implements SegmentProvider,Serializable{
     public String toString() {
         return "PaginationData{" + "currentPage=" + currentPage + ",pageSize=" + pageSize + ",totalSize=" + totalSize + ",fromIndex=" + fromIndex + ",toIndex=" + toIndex + ",lastPage=" + lastPage + '}';
     }
+
+    private void calculateTotalSize() {
+        if (totalSize < 0) {
+            totalSize = 0;
+        }
+    }
+
+    private void calculatePageSize() {
+        if (pageSize < 1) {
+            pageSize = Paginator.DEFAULT_PAGE_SIZE;
+        }
+    }
+
+    private void calculateLastPage() {
+        lastPage = getFirstPage();
+        if (!isEmpty()) {
+            lastPage = (totalSize / pageSize);
+            if ((totalSize % pageSize) > 0) {
+                lastPage++;
+            }
+        }
+    }
+
+    private void calculateCurrentPage() {
+        if (currentPage > lastPage) {
+            currentPage = lastPage;
+        }
+        if (!(currentPage > 0 && currentPage <= lastPage)) {
+            currentPage = 1;
+        }
+    }
+
+    private void calculatePageStart() {
+        if (!isEmpty() && currentPage > 1) {
+            fromIndex = (currentPage - 1) * pageSize;
+            if ((fromIndex + 1) > totalSize) {
+                fromIndex = totalSize - (pageSize - pageSize % totalSize);
+            }
+        } else {
+            fromIndex = 0;
+        }
+    }
+
+    private void calculatePageEnd() {
+        toIndex = getFromIndex() + pageSize;
+        if (toIndex > totalSize) {
+            toIndex = totalSize;
+        }
+    }
+
 }
