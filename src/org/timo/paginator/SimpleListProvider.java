@@ -4,6 +4,7 @@ package org.timo.paginator;
 import java.util.List;
 /**
  *
+ * @param <T> 
  * @author Timoteo Ponce
  */
 public class SimpleListProvider<T> implements ListProvider<T> {

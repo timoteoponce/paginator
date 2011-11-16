@@ -176,4 +176,8 @@ public class PaginationData implements SegmentProvider, Serializable {
         }
     }
 
+    boolean isInPagesRange(int currentIndex) {
+        return currentIndex < getPageSize() - 1;   
+    }
+
 }

@@ -12,15 +12,17 @@ package org.timo.paginator;
 public class Iterator<T> {
 
     private final Paginator<T> paginator;
+    private final PaginationData paginationData;
     private T selected;
     private int currentIndex = 0;
 
-    public Iterator(final Paginator<T> paginator) {
+    public Iterator(final Paginator<T> paginator, PaginationData paginationData) {
         this.paginator = paginator;
+        this.paginationData = paginationData;
     }
 
     public T goNext() {
-        if (currentIndex < paginator.getPageSize() - 1) {
+        if (paginationData.isInPagesRange(currentIndex)) {
             currentIndex += 1;
         }
         return updateSelected();
@@ -38,10 +40,9 @@ public class Iterator<T> {
     }
 
     private T updateSelected() {
-        if (!paginator.getList().isEmpty()) {
-            this.selected = paginator.getList().get(currentIndex);
+        if (!paginator.isEmptyList()) {
+            this.selected = paginator.getItem(currentIndex);
         }
         return selected;
-
     }
 }

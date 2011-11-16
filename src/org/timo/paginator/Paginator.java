@@ -181,6 +181,16 @@ public class Paginator<T> implements Serializable {
     }
 
     public Iterator<T> iterator() {
-        return new Iterator(this);
+        return new Iterator(this,paginationData);
     }
+
+    boolean isEmptyList() {
+        return getList().isEmpty();
+    }
+   
+    T getItem(int index){
+        return getList().get(index);
+    }
+    
+    
 }
