@@ -19,7 +19,7 @@ public class Paginator<T> implements Serializable {
 
     public static final int DEFAULT_PAGE_SIZE = 5;
     private final PaginationData paginationData;
-    private ListProvider<T> listProvider;
+    private final ListProvider<T> listProvider;
     private List<T> resultList;
     private boolean dirty = true;
 
@@ -37,10 +37,6 @@ public class Paginator<T> implements Serializable {
         this.paginationData = paginationData;
         this.listProvider = listProvider;
     }
-
-	public void setListProvider(final ListProvider<T> listProvider){
-		this.listProvider = listProvider;
-	}
 
     /**
      * Returns current page's list. If there's not result at all, it returns
