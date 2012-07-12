@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.timoteoponce</groupId>
 	<artifactId>paginator</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Paginator</name>
 	<url>http://timoteoponce.github.com/paginator/</url>
