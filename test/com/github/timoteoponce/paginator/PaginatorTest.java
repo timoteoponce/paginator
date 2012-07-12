@@ -2,12 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.timo.paginator;
+package com.github.timoteoponce.paginator;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.github.timoteoponce.paginator.ListProvider;
+import com.github.timoteoponce.paginator.Paginator;
+import com.github.timoteoponce.paginator.SegmentProvider;
 
 /**
  *

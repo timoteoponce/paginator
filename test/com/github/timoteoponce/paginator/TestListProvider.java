@@ -2,10 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.timo.paginator;
+package com.github.timoteoponce.paginator;
 
 import java.util.List;
 import java.util.logging.Logger;
+
+import com.github.timoteoponce.paginator.ListProvider;
+import com.github.timoteoponce.paginator.Segment;
+import com.github.timoteoponce.paginator.SegmentProvider;
 
 /**
  *
