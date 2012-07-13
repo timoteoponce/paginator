@@ -1,5 +1,5 @@
 
-package org.timo.paginator;
+package com.github.timoteoponce.paginator;
 
 import java.util.List;
 /**
