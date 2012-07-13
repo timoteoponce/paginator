@@ -15,10 +15,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
-import org.timo.paginator.ListProvider;
-import org.timo.paginator.Paginator;
-import org.timo.paginator.Segment;
-import org.timo.paginator.SegmentProvider;
+import com.github.timoteoponce.paginator.ListProvider;
+import com.github.timoteoponce.paginator.Paginator;
+import com.github.timoteoponce.paginator.Segment;
+import com.github.timoteoponce.paginator.SegmentProvider;
 
 /**
  *
