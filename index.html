@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Paginator : Generic stateless paginator component for Java" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Paginator</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/timoteoponce/paginator">View on GitHub</a>
+
+          <h1 id="project_title">Paginator</h1>
+          <h2 id="project_tagline">Generic stateless paginator component for Java</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/timoteoponce/paginator/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/timoteoponce/paginator/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>Overview</h3>
+
+<p>After searching for a generic (without third-party dependencies) pagination component for several hours, I decided to start my own from scratch. After a few days I have a workable version of it:</p>
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.logging.Logger</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.github.timoteoponce.paginator.ListProvider</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.github.timoteoponce.paginator.Paginator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.github.timoteoponce.paginator.Segment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.github.timoteoponce.paginator.SegmentProvider</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * </span>
+<span class="cm"> * @author Timoteo Ponce</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestPaginator</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getAnonymousLogger</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Paginator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">paginator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Paginator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;(</span><span class="k">new</span> <span class="n">MyListProvider</span><span class="o">(),</span> <span class="mi">3</span><span class="o">);</span>
+        <span class="c1">// "Akira", "Edward", "Alphonse"</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Page 1: "</span> <span class="o">+</span> <span class="n">paginator</span><span class="o">.</span><span class="na">getList</span><span class="o">());</span>
+        <span class="n">paginator</span><span class="o">.</span><span class="na">goNextPage</span><span class="o">();</span>
+        <span class="c1">// "Mustang", "Hawkeye", "Lusty"</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Page 2: "</span> <span class="o">+</span> <span class="n">paginator</span><span class="o">.</span><span class="na">getList</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyListProvider</span> <span class="kd">implements</span> <span class="n">ListProvider</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">{</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">sourceList</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"Akira"</span><span class="o">,</span> <span class="s">"Edward"</span><span class="o">,</span> <span class="s">"Alphonse"</span><span class="o">,</span> <span class="s">"Mustang"</span><span class="o">,</span> <span class="s">"Hawkeye"</span><span class="o">,</span> <span class="s">"Lusty"</span><span class="o">,</span> <span class="s">"Gluton"</span><span class="o">,</span> <span class="s">"Envy"</span><span class="o">,</span> <span class="s">"Lust"</span><span class="o">,</span> <span class="s">"Wrath"</span><span class="o">);</span>
+
+        <span class="cm">/*</span>
+<span class="cm">         * (non-Javadoc)</span>
+<span class="cm">         * </span>
+<span class="cm">         * @see org.timo.paginator.ListProvider#provideList(org.timo.paginator.SegmentProvider)</span>
+<span class="cm">         */</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">provideList</span><span class="o">(</span><span class="kd">final</span> <span class="n">SegmentProvider</span> <span class="n">segmentProvider</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// we need the total source list size for calculations and checkings</span>
+            <span class="n">Segment</span> <span class="n">segment</span> <span class="o">=</span> <span class="n">segmentProvider</span><span class="o">.</span><span class="na">getSegment</span><span class="o">(</span><span class="n">sourceList</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+            <span class="k">return</span> <span class="n">sourceList</span><span class="o">.</span><span class="na">subList</span><span class="o">(</span><span class="n">segment</span><span class="o">.</span><span class="na">getFromIndex</span><span class="o">(),</span> <span class="n">segment</span><span class="o">.</span><span class="na">getToIndex</span><span class="o">());</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>As you can see, it's very simple to use and you can extend it as much as you want to. The core of the component is the pages-size-limits calculation defined in the class PaginationData.</p>
+
+<p>Maven setup:</p>
+
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.github.timoteoponce&lt;/groupId&gt;
+    &lt;artifactId&gt;paginator&lt;/artifactId&gt;
+    &lt;version&gt;0.0.5&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>Examples: </p>
+
+<ul>
+<li><a href="https://github.com/timoteoponce/paginator/tree/master/examples">https://github.com/timoteoponce/paginator/tree/master/examples</a></li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Paginator maintained by <a href="https://github.com/timoteoponce">timoteoponce</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
