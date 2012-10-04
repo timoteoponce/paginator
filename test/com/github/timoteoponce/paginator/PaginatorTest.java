@@ -9,9 +9,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.timoteoponce.paginator.ListProvider;
-import com.github.timoteoponce.paginator.Paginator;
-import com.github.timoteoponce.paginator.SegmentProvider;
+import ch.swissbytes.paginator.ListProvider;
+import ch.swissbytes.paginator.Paginator;
+import ch.swissbytes.paginator.SegmentProvider;
 
 /**
  *

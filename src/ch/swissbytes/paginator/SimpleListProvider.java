@@ -1,9 +1,9 @@
 
-package com.github.timoteoponce.paginator;
+package ch.swissbytes.paginator;
 
 import java.util.List;
 /**
- *
+ * Fork of https://github.com/timoteoponce/paginator.
  * @author Timoteo Ponce
  */
 public class SimpleListProvider<T> implements ListProvider<T> {

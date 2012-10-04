@@ -2,13 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.timoteoponce.paginator;
+package ch.swissbytes.paginator;
 
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Fork of https://github.com/timoteoponce/paginator.
  * Base model component for pagination operations, this component
  * calculates the list segments and handles page-transitions.
  * @author Timoteo Ponce
@@ -174,6 +175,16 @@ public class PaginationData implements SegmentProvider, Serializable {
         if (toIndex > totalSize) {
             toIndex = totalSize;
         }
+    }
+
+    public PaginationData duplicate() {
+        PaginationData data = new PaginationData(totalSize, pageSize);
+        data.currentPage = currentPage;
+        data.fromIndex = fromIndex;
+        data.lastPage = lastPage;
+        data.toIndex = toIndex;
+        data.totalSize = totalSize;
+        return data;
     }
 
 }

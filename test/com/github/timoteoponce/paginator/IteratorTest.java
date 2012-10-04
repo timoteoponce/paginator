@@ -9,8 +9,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.timoteoponce.paginator.Iterator;
-import com.github.timoteoponce.paginator.Paginator;
+import ch.swissbytes.paginator.Iterator;
+import ch.swissbytes.paginator.Paginator;
 
 /**
  *

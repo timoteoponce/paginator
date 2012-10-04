@@ -2,12 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.timoteoponce.paginator;
+package ch.swissbytes.paginator;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
+ * Fork of https://github.com/timoteoponce/paginator.
  * Client-provider component in charge of providing a segmented
  * list using SegmentProvider's information.
  * @param <T>  working object type

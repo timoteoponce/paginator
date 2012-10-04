@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.timoteoponce.paginator;
+package ch.swissbytes.paginator;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.event.EventListenerList;
 
 /**
+ * Fork of https://github.com/timoteoponce/paginator.
  * Core component handling pagination operations. It provides pagination
  * operations and pages information., aditionally provides an event-listener 
  * model that is triggered every time a pagination action modifies the current page (all 'go' operations).
@@ -205,8 +206,9 @@ public class Paginator<T> implements Serializable {
 		
 	private void fireChangedEvent(){
 		PaginatorEventListener[] listeners = listenerList.getListeners(PaginatorEventListener.class);
+                PaginationData dataClone =  paginationData.duplicate();
 		for (PaginatorEventListener listener : listeners) {
-			listener.pageChanged();
+			listener.pageChanged(dataClone);
 		}
 	}
 }

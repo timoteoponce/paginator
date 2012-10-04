@@ -7,7 +7,7 @@ package com.github.timoteoponce.paginator;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.timoteoponce.paginator.PaginationData;
+import ch.swissbytes.paginator.PaginationData;
 
 /**
  *
