@@ -7,10 +7,15 @@ package com.github.timoteoponce.paginator;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.event.EventListenerList;
 
 /**
  * Core component handling pagination operations. It provides pagination
- * operations and pages information.
+ * operations and pages information., aditionally provides an event-listener 
+ * model that is triggered every time a pagination action modifies the current page (all 'go' operations).
+ * 
+ *
+ * 
  * @param <T> working object type
  * @author Timoteo Ponce
  * @author Rory Sandoval - original implementation
@@ -22,6 +27,7 @@ public class Paginator<T> implements Serializable {
     private final ListProvider<T> listProvider;
     private List<T> resultList;
     private boolean dirty = true;
+	private final EventListenerList listenerList = new EventListenerList();
 
     public Paginator(final ListProvider<T> listProvider) {
         this(listProvider, 1);
@@ -54,6 +60,7 @@ public class Paginator<T> implements Serializable {
     public void goFirstPage() {
         paginationData.setCurrentPage(getFirstPage());
         markAsDirty();
+		fireChangedEvent();
     }
 
     /**
@@ -63,6 +70,7 @@ public class Paginator<T> implements Serializable {
     public void goPreviousPage() {
         paginationData.setCurrentPage(getPreviousPage());
         markAsDirty();
+		fireChangedEvent();
     }
 
     /**
@@ -72,6 +80,7 @@ public class Paginator<T> implements Serializable {
     public void goNextPage() {
         paginationData.setCurrentPage(getNextPage());
         markAsDirty();
+		fireChangedEvent();
     }
 
     /**
@@ -80,7 +89,8 @@ public class Paginator<T> implements Serializable {
      */
     public void goLastPage() {
         paginationData.setCurrentPage(getLastPage());
-        markAsDirty();
+        markAsDirty();		
+		fireChangedEvent();
     }
 
     /**
@@ -184,13 +194,19 @@ public class Paginator<T> implements Serializable {
         return new Iterator(this,paginationData);
     }
 
-    boolean isEmptyList() {
-        return getList().isEmpty();
-    }
-   
-    T getItem(int index){
-        return getList().get(index);
-    }
-    
-    
+	// events
+	public void addListener(PaginatorEventListener listener){
+		listenerList.add(PaginatorEventListener.class, listener);
+	}
+	
+	public void removeListener(PaginatorEventListener listener){
+		listenerList.remove(PaginatorEventListener.class, listener);
+	}
+		
+	private void fireChangedEvent(){
+		PaginatorEventListener[] listeners = listenerList.getListeners(PaginatorEventListener.class);
+		for (PaginatorEventListener listener : listeners) {
+			listener.pageChanged();
+		}
+	}
 }
