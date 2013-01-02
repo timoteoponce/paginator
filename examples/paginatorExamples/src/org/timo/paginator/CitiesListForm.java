@@ -10,6 +10,10 @@
  */
 package org.timo.paginator;
 
+import com.github.timoteoponce.paginator.ListProvider;
+import com.github.timoteoponce.paginator.Paginator;
+import com.github.timoteoponce.paginator.Segment;
+import com.github.timoteoponce.paginator.SegmentProvider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,7 +33,7 @@ public class CitiesListForm extends javax.swing.JFrame implements ListProvider<C
     /** Creates new form CitiesListForm */
     public CitiesListForm() {
         initComponents();
-        paginator.init();
+        paginator.refresh();
         refreshTable();
 
         this.pageSizeCombo.addItem("5");
@@ -228,8 +232,8 @@ public class CitiesListForm extends javax.swing.JFrame implements ListProvider<C
         log.info("Last page : "+paginator.getLastPage());
     }
 
-    public List<City> provideList(RangeProvider rangeProvider) {
-        Range range = rangeProvider.getRange(cities.size());
+    public List<City> provideList(SegmentProvider rangeProvider) {
+        Segment range = rangeProvider.getSegment(cities.size());
         log.info("Providing list : "+range);
         return cities.subList(range.getFromIndex(), range.getToIndex());
     }

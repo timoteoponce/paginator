@@ -23,10 +23,10 @@
             </h:dataTable>
             <hr/>
             <h:panelGrid columns="4">
-                <h:commandLink value="first" action="#{personBean.paginator.goFirstPage}" disabled="#{personBean.paginator.hasFirstPage()}"/>
+                <h:commandLink value="first" action="#{personBean.paginator.goFirstPage}" disabled="#{not personBean.paginator.hasFirstPage()}"/>
                 <h:commandLink value="prev" action="#{personBean.paginator.goPreviousPage}" />
                 <h:commandLink value="next" action="#{personBean.paginator.goNextPage}" />
-                <h:commandLink value="last" action="#{personBean.paginator.goLastPage}" disabled="#{personBean.paginator.hasLastPage()}"/>
+                <h:commandLink value="last" action="#{personBean.paginator.goLastPage}" disabled="#{not personBean.paginator.hasLastPage()}"/>
             </h:panelGrid>
             <h:panelGroup>
                 <h:outputLabel value="PageSize"/>

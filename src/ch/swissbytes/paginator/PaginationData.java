@@ -177,6 +177,10 @@ public class PaginationData implements SegmentProvider, Serializable {
         }
     }
 
+    boolean isInPagesRange(int currentIndex) {
+        return currentIndex < getPageSize() - 1;
+    }
+   
     public PaginationData duplicate() {
         PaginationData data = new PaginationData(totalSize, pageSize);
         data.currentPage = currentPage;
@@ -187,4 +191,5 @@ public class PaginationData implements SegmentProvider, Serializable {
         return data;
     }
 
+}
 }

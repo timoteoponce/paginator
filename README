@@ -1,7 +1,0 @@
-Simple paginator component for Java-5
-
-Overview
-
-After searching for a generic (without third-party dependencies) pagination component for several hours, 
-I decided to start my own from scratch. After a few days I had a workable version of it: 
- - http://timoteoponce.github.com/paginator/
