@@ -1,36 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Paginator : Generic stateless paginator component for Java" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Paginator by timoteoponce</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Paginator</title>
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/timoteoponce/paginator">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/timoteoponce/paginator/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/timoteoponce/paginator/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/timoteoponce/paginator">View on GitHub</a>
+    <div class="wrapper">
 
-          <h1 id="project_title">Paginator</h1>
-          <h2 id="project_tagline">Generic stateless paginator component for Java</h2>
+      <section>
+        <div id="title">
+          <h1>Paginator</h1>
+          <p>Generic stateless paginator component for Java</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/timoteoponce">timoteoponce</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/timoteoponce/paginator/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/timoteoponce/paginator/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
         <h3>Overview</h3>
 
 <p>After searching for a generic (without third-party dependencies) pagination component for several hours, I decided to start my own from scratch. After a few days I have a workable version of it:</p>
@@ -70,7 +77,7 @@
 <span class="cm">         * @see org.timo.paginator.ListProvider#provideList(org.timo.paginator.SegmentProvider)</span>
 <span class="cm">         */</span>
         <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">provideList</span><span class="o">(</span><span class="kd">final</span> <span class="n">SegmentProvider</span> <span class="n">segmentProvider</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">provideList</span><span class="o">(</span><span class="kd">final</span> <span class="n">SegmentProvider</span> <span class="n">segmentProvider</span><span class="o">)</span> <span class="o">{</span>
             <span class="c1">// we need the total source list size for calculations and checkings</span>
             <span class="n">Segment</span> <span class="n">segment</span> <span class="o">=</span> <span class="n">segmentProvider</span><span class="o">.</span><span class="na">getSegment</span><span class="o">(</span><span class="n">sourceList</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
             <span class="k">return</span> <span class="n">sourceList</span><span class="o">.</span><span class="na">subList</span><span class="o">(</span><span class="n">segment</span><span class="o">.</span><span class="na">getFromIndex</span><span class="o">(),</span> <span class="n">segment</span><span class="o">.</span><span class="na">getToIndex</span><span class="o">());</span>
@@ -95,19 +102,15 @@
 
 <ul>
 <li><a href="https://github.com/timoteoponce/paginator/tree/master/examples">https://github.com/timoteoponce/paginator/tree/master/examples</a></li>
+</ul><p>JavaDoc</p>
+
+<ul>
+<li><a href="http://timoteoponce.github.com/paginator/apidocs/index.html">http://timoteoponce.github.com/paginator/apidocs/index.html</a></li>
 </ul>
       </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Paginator maintained by <a href="https://github.com/timoteoponce">timoteoponce</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
     </div>
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
-
   </body>
 </html>
