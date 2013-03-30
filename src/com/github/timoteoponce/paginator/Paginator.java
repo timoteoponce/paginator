@@ -11,7 +11,7 @@ import javax.swing.event.EventListenerList;
 
 /**
  * Core component handling pagination operations. It provides pagination
- * operations and pages information., aditionally provides an event-listener 
+ * operations and pages information; additionally provides an event-listener 
  * model that is triggered every time a pagination action modifies the current page (all 'go' operations).
  * 
  *
@@ -27,7 +27,7 @@ public class Paginator<T> implements Serializable {
     private final ListProvider<T> listProvider;
     private List<T> resultList;
     private boolean dirty = true;
-	private final EventListenerList listenerList = new EventListenerList();
+    private final EventListenerList listenerList = new EventListenerList();
 
     public Paginator(final ListProvider<T> listProvider) {
         this(listProvider, 1);
@@ -60,7 +60,7 @@ public class Paginator<T> implements Serializable {
     public void goFirstPage() {
         paginationData.setCurrentPage(getFirstPage());
         markAsDirty();
-		fireChangedEvent();
+        fireChangedEvent();
     }
 
     /**
@@ -70,7 +70,7 @@ public class Paginator<T> implements Serializable {
     public void goPreviousPage() {
         paginationData.setCurrentPage(getPreviousPage());
         markAsDirty();
-		fireChangedEvent();
+        fireChangedEvent();
     }
 
     /**
@@ -80,7 +80,7 @@ public class Paginator<T> implements Serializable {
     public void goNextPage() {
         paginationData.setCurrentPage(getNextPage());
         markAsDirty();
-		fireChangedEvent();
+        fireChangedEvent();
     }
 
     /**
@@ -89,8 +89,8 @@ public class Paginator<T> implements Serializable {
      */
     public void goLastPage() {
         paginationData.setCurrentPage(getLastPage());
-        markAsDirty();		
-		fireChangedEvent();
+        markAsDirty();
+        fireChangedEvent();
     }
 
     /**
@@ -182,7 +182,7 @@ public class Paginator<T> implements Serializable {
         return paginationData.hasLastPage();
     }
 
-    public boolean isEmpty() {
+    public boolean isEmpty() {        
         return paginationData.isEmpty();
     }
 
@@ -191,22 +191,27 @@ public class Paginator<T> implements Serializable {
     }
 
     public Iterator<T> iterator() {
-        return new Iterator(this,paginationData);
+        init();
+        return new Iterator(this, paginationData);
     }
 
-	// events
-	public void addListener(PaginatorEventListener listener){
-		listenerList.add(PaginatorEventListener.class, listener);
-	}
-	
-	public void removeListener(PaginatorEventListener listener){
-		listenerList.remove(PaginatorEventListener.class, listener);
-	}
-		
-	private void fireChangedEvent(){
-		PaginatorEventListener[] listeners = listenerList.getListeners(PaginatorEventListener.class);
-		for (PaginatorEventListener listener : listeners) {
-			listener.pageChanged();
-		}
-	}
+    // events
+    public void addListener(PaginatorEventListener listener) {
+        listenerList.add(PaginatorEventListener.class, listener);
+    }
+
+    public void removeListener(PaginatorEventListener listener) {
+        listenerList.remove(PaginatorEventListener.class, listener);
+    }
+
+    private void fireChangedEvent() {
+        PaginatorEventListener[] listeners = listenerList.getListeners(PaginatorEventListener.class);
+        for (PaginatorEventListener listener : listeners) {
+            listener.pageChanged();
+        }
+    }
+
+    public T getItem(int index) {        
+        return resultList.get(index);
+    }
 }

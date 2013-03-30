@@ -21,7 +21,7 @@ public class Iterator<T> {
         this.paginationData = paginationData;
     }
 
-    public T goNext() {
+    public T goNext() {        
         if (paginationData.isInPagesRange(currentIndex)) {
             currentIndex += 1;
         }
@@ -39,8 +39,8 @@ public class Iterator<T> {
         return updateSelected();
     }
 
-    private T updateSelected() {
-        if (!paginator.isEmptyList()) {
+    private T updateSelected() {        
+        if (!paginator.isEmpty()) {            
             this.selected = paginator.getItem(currentIndex);
         }
         return selected;
