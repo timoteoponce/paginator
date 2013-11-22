@@ -4,45 +4,41 @@
  */
 package com.github.timoteoponce.paginator;
 
+import java.util.Collection;
+
 /**
  *
  * @param <T>
  * @author timoteo
  */
-public class Iterator<T> {
+public class Iterator<T> implements java.util.Iterator<Collection<T>> {
 
     private final Paginator<T> paginator;
-    private final PaginationData paginationData;
-    private T selected;
-    private int currentIndex = 0;
 
-    public Iterator(final Paginator<T> paginator, PaginationData paginationData) {
+    private int nextPage = 0;
+
+    public Iterator(final Paginator<T> paginator) {
         this.paginator = paginator;
-        this.paginationData = paginationData;
     }
 
-    public T goNext() {        
-        if (paginationData.isInPagesRange(currentIndex)) {
-            currentIndex += 1;
+    @Override
+    public boolean hasNext() {
+        return paginator.hasNextPage() || nextPage == 0;
+    }
+
+    @Override
+    public Collection<T> next() {
+        if (nextPage == 0 || paginator.isLastPage()) {
+            paginator.goFirstPage();
+        }else{
+            paginator.goNextPage();
         }
-        return updateSelected();
+        nextPage++;
+        return paginator.getList();
     }
 
-    public T goPrevious() {
-        if (currentIndex > 0) {
-            currentIndex -= 1;
-        }
-        return updateSelected();
-    }
-
-    public T getSelected() {
-        return updateSelected();
-    }
-
-    private T updateSelected() {        
-        if (!paginator.isEmpty()) {            
-            this.selected = paginator.getItem(currentIndex);
-        }
-        return selected;
+    @Override
+    public void remove() {
+        // do nothing
     }
 }

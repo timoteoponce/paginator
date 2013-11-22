@@ -4,14 +4,16 @@
  */
 package com.github.timoteoponce.paginator;
 
+import javax.swing.event.EventListenerList;
+
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import javax.swing.event.EventListenerList;
 
 /**
  * Core component handling pagination operations. It provides pagination
- * operations and pages information; additionally provides an event-listener 
+ * operations and pages information., aditionally provides an event-listener 
  * model that is triggered every time a pagination action modifies the current page (all 'go' operations).
  * 
  *
@@ -20,14 +22,23 @@ import javax.swing.event.EventListenerList;
  * @author Timoteo Ponce
  * @author Rory Sandoval - original implementation
  */
-public class Paginator<T> implements Serializable {
+public class Paginator<T> implements Serializable, Iterable<Collection<T>> {
 
     public static final int DEFAULT_PAGE_SIZE = 5;
     private final PaginationData paginationData;
-    private final ListProvider<T> listProvider;
+    private ListProvider<T> listProvider;
     private List<T> resultList;
     private boolean dirty = true;
     private final EventListenerList listenerList = new EventListenerList();
+
+    public Paginator() {     
+        this(DEFAULT_PAGE_SIZE);
+    }
+
+    public Paginator(final int pageSize) {     
+        this.paginationData = new PaginationData();
+        this.paginationData.setPageSize(pageSize);
+    }
 
     public Paginator(final ListProvider<T> listProvider) {
         this(listProvider, 1);
@@ -42,6 +53,11 @@ public class Paginator<T> implements Serializable {
     public Paginator(final ListProvider<T> listProvider, final PaginationData paginationData) {
         this.paginationData = paginationData;
         this.listProvider = listProvider;
+    }    
+
+    public void setListProvider(final ListProvider<T> listProvider) {
+        this.listProvider = listProvider;
+        this.refresh();
     }
 
     /**
@@ -58,6 +74,7 @@ public class Paginator<T> implements Serializable {
      * Redirects to the first page.
      */
     public void goFirstPage() {
+        init();
         paginationData.setCurrentPage(getFirstPage());
         markAsDirty();
         fireChangedEvent();
@@ -68,6 +85,7 @@ public class Paginator<T> implements Serializable {
      * current page's value remains.
      */
     public void goPreviousPage() {
+        init();
         paginationData.setCurrentPage(getPreviousPage());
         markAsDirty();
         fireChangedEvent();
@@ -78,6 +96,7 @@ public class Paginator<T> implements Serializable {
      * current page's value remains.
      */
     public void goNextPage() {
+        init();
         paginationData.setCurrentPage(getNextPage());
         markAsDirty();
         fireChangedEvent();
@@ -88,8 +107,9 @@ public class Paginator<T> implements Serializable {
      * current page's value remains.
      */
     public void goLastPage() {
+        init();
         paginationData.setCurrentPage(getLastPage());
-        markAsDirty();
+        markAsDirty();		
         fireChangedEvent();
     }
 
@@ -97,6 +117,9 @@ public class Paginator<T> implements Serializable {
      * Refreshes current result list.
      */
     public void refresh() {
+        if(listProvider == null){
+            throw new IllegalArgumentException("ListProvider must be set");
+        }
         this.resultList = listProvider.provideList(paginationData);
         if (resultList == null || resultList.isEmpty()) {
             resultList = Collections.EMPTY_LIST;
@@ -131,10 +154,11 @@ public class Paginator<T> implements Serializable {
      * @return 
      */
     public int getCurrentPage() {
+        init();
         return paginationData.getCurrentPage();
     }
 
-    public void setCurrentPage(int currentPage) {
+    public void setCurrentPage(final int currentPage) {
         this.paginationData.setCurrentPage(currentPage);
     }
 
@@ -142,47 +166,57 @@ public class Paginator<T> implements Serializable {
         return paginationData.getPageSize();
     }
 
-    public void setPageSize(int pageSize) {
+    public void setPageSize(final int pageSize) {
         this.paginationData.setPageSize(pageSize);
     }
 
     public int getTotalSize() {
+        init();
         return paginationData.getTotalSize();
     }
 
     public int getFirstPage() {
+        init();
         return paginationData.getFirstPage();
     }
 
     public int getNextPage() {
+        init();
         return paginationData.getNextPage();
     }
 
     public int getPreviousPage() {
+        init();
         return paginationData.getPreviousPage();
     }
 
     public int getLastPage() {
+        init();
         return paginationData.getLastPage();
     }
 
     public boolean hasNextPage() {
+        init();
         return paginationData.hasNextPage();
     }
 
     public boolean hasPreviousPage() {
+        init();
         return paginationData.hasPreviousPage();
     }
 
     public boolean hasFirstPage() {
+        init();
         return paginationData.hasFirstPage();
     }
 
     public boolean hasLastPage() {
+        init();
         return paginationData.hasLastPage();
     }
 
-    public boolean isEmpty() {        
+    public boolean isEmpty() {
+        init();
         return paginationData.isEmpty();
     }
 
@@ -190,28 +224,37 @@ public class Paginator<T> implements Serializable {
         this.dirty = true;
     }
 
-    public Iterator<T> iterator() {
-        init();
-        return new Iterator(this, paginationData);
+    public java.util.Iterator<Collection<T>> iterator() {
+        return new Iterator(this);
     }
 
     // events
-    public void addListener(PaginatorEventListener listener) {
+    public void addListener(final PaginatorEventListener listener){
         listenerList.add(PaginatorEventListener.class, listener);
     }
 
-    public void removeListener(PaginatorEventListener listener) {
+    public void removeListener(final PaginatorEventListener listener){
         listenerList.remove(PaginatorEventListener.class, listener);
     }
 
-    private void fireChangedEvent() {
+    private void fireChangedEvent(){
         PaginatorEventListener[] listeners = listenerList.getListeners(PaginatorEventListener.class);
         for (PaginatorEventListener listener : listeners) {
             listener.pageChanged();
         }
     }
 
-    public T getItem(int index) {        
-        return resultList.get(index);
+    public T getItem(final int currentIndex) {        
+        return getList().get(currentIndex);
     }
+
+    public static<T> ListProvider<T> listProviderOf(final List<T> sourceList){
+        return new SimpleListProvider<T>(sourceList);
+    }
+
+    public boolean isLastPage() {
+        return getLastPage() == getCurrentPage();
+    }
+
+
 }
